@@ -1,3 +1,4 @@
+import About from "../../Components/HomeComponents/About/About";
 import Blog from "../../Components/HomeComponents/Blog/Blog";
 import Count from "../../Components/HomeComponents/Count/Count";
 import EventGallery from "../../Components/HomeComponents/EventGallery/EventGallery";
@@ -19,6 +20,7 @@ const Home = () => {
             <OurFaculty />
             <Blog />
             <TalkWith />
+            <About />
         </div>
     );
 };
