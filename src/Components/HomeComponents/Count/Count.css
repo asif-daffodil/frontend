@@ -1,0 +1,20 @@
+.counter{
+    width: 236px;
+    height: 236px;
+    border-radius: 50%;
+    background: #4039CCCC;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -118px;
+    position: relative;
+    z-index: 10;
+    margin-bottom: -118px;
+}
+
+.countNumber{
+    &::after{
+        content: "+";
+    }
+}

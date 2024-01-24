@@ -1,3 +1,17 @@
+.carousel-item{
+    height: 100vh;
+    min-height: 350px;
+}
+
+.carousel-item img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 350px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .carousel-indicators [data-bs-target] {
     width: 20px;
     height: 20px;
@@ -8,4 +22,17 @@
 .carousel-caption{
     bottom: 50%;
     transform: translateY(50%);
+    text-align: left;
+}
+
+.carousel-caption > h4{
+    font-size: 6vw;
+}
+
+.carousel-caption > p{
+    font-size: 1.6vw;
+}
+
+.carousel-indicators{
+    bottom: 13%;
 }

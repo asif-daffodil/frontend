@@ -3,7 +3,7 @@ import noticeImg from '../../../images/notice/notice.jpg';
 const LatestNotice = () => {
     return (
         <div className="container-fluid bg-primary-subtle pt-5">
-            <div className="container py-5">
+            <div className="container py-5 mt-5">
                 <div className="row">
                     <div className="col-md-12 mb-4">
                         <h2 className="display-4 text-center">Latest <span className="text-primary">Notice</span></h2>
