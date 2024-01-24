@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import MBBSBanner from "../../../images/mbbsBanner.png";
+import "./MBBSProgram.css";
 
 const MBBSProgram = () => {
     return (
-        <div className="container-fluid py-5">
+        <div className="container-fluid py-5 commonbg">
             <div className="row">
                 <div className="col-md-12">
                     <h3 className="text-center display-4 mb-3">MBBS <span className="text-primary">Program</span></h3>

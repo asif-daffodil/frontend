@@ -22,7 +22,7 @@ const LatestNotice = () => {
                                         Happy New Year to the aspiring future doctor at Salymbekov Medical University in Bangladesh!
                                     </h4>
                                     <p>
-                                        May the upcoming year be filled with academic success, meaningful experiences, and abundant opportunities for learning and growth. May you overcome challenges with resilience and find inspiration in your journey towards becoming a doctor. Here's to a year of progress, achievements, and taking steps closer to realizing your dream of making a difference in the field of medicine. Wishing you a joyful and prosperous New Year! Wishing you a joyful and prosperous New Year!Wishing you a joyful and prosperous New Year!
+                                        May the upcoming year be filled with academic success, meaningful experiences, and abundant opportunities for learning and growth. May you overcome challenges with resilience and find inspiration in your journey towards becoming a doctor. Here&apos;s to a year of progress, achievements, and taking steps closer to realizing your dream of making a difference in the field of medicine. Wishing you a joyful and prosperous New Year! Wishing you a joyful and prosperous New Year!Wishing you a joyful and prosperous New Year!
                                     </p>
                                     <button className='btn btn-light btn-sm '>Read more</button>
                                 </div>
@@ -43,7 +43,7 @@ const LatestNotice = () => {
                                         Happy New Year to the aspiring future doctor at Salymbekov Medical University in Bangladesh!
                                     </h4>
                                     <p>
-                                        May the upcoming year be filled with academic success, meaningful experiences, and abundant opportunities for learning and growth. May you overcome challenges with resilience and find inspiration in your journey towards becoming a doctor. Here's to a year of progress, achievements, and taking steps closer to realizing your dream of making a difference in the field of medicine. Wishing you a joyful and prosperous New Year! Wishing you a joyful and prosperous New Year!Wishing you a joyful and prosperous New Year!
+                                        May the upcoming year be filled with academic success, meaningful experiences, and abundant opportunities for learning and growth. May you overcome challenges with resilience and find inspiration in your journey towards becoming a doctor. Here&apos;s to a year of progress, achievements, and taking steps closer to realizing your dream of making a difference in the field of medicine. Wishing you a joyful and prosperous New Year! Wishing you a joyful and prosperous New Year!Wishing you a joyful and prosperous New Year!
                                     </p>
                                     <button className='btn btn-light btn-sm '>Read more</button>
                                 </div>
@@ -64,7 +64,7 @@ const LatestNotice = () => {
                                         Happy New Year to the aspiring future doctor at Salymbekov Medical University in Bangladesh!
                                     </h4>
                                     <p>
-                                        May the upcoming year be filled with academic success, meaningful experiences, and abundant opportunities for learning and growth. May you overcome challenges with resilience and find inspiration in your journey towards becoming a doctor. Here's to a year of progress, achievements, and taking steps closer to realizing your dream of making a difference in the field of medicine. Wishing you a joyful and prosperous New Year! Wishing you a joyful and prosperous New Year!Wishing you a joyful and prosperous New Year!
+                                        May the upcoming year be filled with academic success, meaningful experiences, and abundant opportunities for learning and growth. May you overcome challenges with resilience and find inspiration in your journey towards becoming a doctor. Here&apos;s to a year of progress, achievements, and taking steps closer to realizing your dream of making a difference in the field of medicine. Wishing you a joyful and prosperous New Year! Wishing you a joyful and prosperous New Year!Wishing you a joyful and prosperous New Year!
                                     </p>
                                     <button className='btn btn-light btn-sm '>Read more</button>
                                 </div>
@@ -85,7 +85,7 @@ const LatestNotice = () => {
                                         Happy New Year to the aspiring future doctor at Salymbekov Medical University in Bangladesh!
                                     </h4>
                                     <p>
-                                        May the upcoming year be filled with academic success, meaningful experiences, and abundant opportunities for learning and growth. May you overcome challenges with resilience and find inspiration in your journey towards becoming a doctor. Here's to a year of progress, achievements, and taking steps closer to realizing your dream of making a difference in the field of medicine. Wishing you a joyful and prosperous New Year! Wishing you a joyful and prosperous New Year!Wishing you a joyful and prosperous New Year!
+                                        May the upcoming year be filled with academic success, meaningful experiences, and abundant opportunities for learning and growth. May you overcome challenges with resilience and find inspiration in your journey towards becoming a doctor. Here&apos;s to a year of progress, achievements, and taking steps closer to realizing your dream of making a difference in the field of medicine. Wishing you a joyful and prosperous New Year! Wishing you a joyful and prosperous New Year!Wishing you a joyful and prosperous New Year!
                                     </p>
                                     <button className='btn btn-light btn-sm '>Read more</button>
                                 </div>
