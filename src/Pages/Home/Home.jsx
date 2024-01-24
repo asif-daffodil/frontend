@@ -1,3 +1,4 @@
+import Blog from "../../Components/HomeComponents/Blog/Blog";
 import Count from "../../Components/HomeComponents/Count/Count";
 import EventGallery from "../../Components/HomeComponents/EventGallery/EventGallery";
 import HomeSlider from "../../Components/HomeComponents/HomeSlider/HomeSlider";
@@ -15,6 +16,7 @@ const Home = () => {
             <MBBSProgram />
             <EventGallery />
             <OurFaculty />
+            <Blog />
         </div>
     );
 };

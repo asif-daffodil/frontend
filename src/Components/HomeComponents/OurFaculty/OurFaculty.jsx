@@ -9,7 +9,7 @@ const OurFaculty = () => {
                         <h3 className="text-center display-4 mb-3">Our <span className="text-primary">Faculty</span></h3>
                     </div>
                 </div>
-                <div className="row d-block d-md-flex justify-content-center gap-5 ">
+                <div className="row d-block d-md-flex justify-content-center gap-5 mb-4">
                     <div className="col">
                         <div className="card text-center border-0">
                             <img src={facultyImg} alt="" className='card-img img-fluid mb-3' />
