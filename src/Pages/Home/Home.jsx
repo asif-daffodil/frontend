@@ -1,5 +1,6 @@
 import About from "../../Components/HomeComponents/About/About";
 import Blog from "../../Components/HomeComponents/Blog/Blog";
+import Contact from "../../Components/HomeComponents/Contact/Contact";
 import Count from "../../Components/HomeComponents/Count/Count";
 import EventGallery from "../../Components/HomeComponents/EventGallery/EventGallery";
 import HomeSlider from "../../Components/HomeComponents/HomeSlider/HomeSlider";
@@ -21,6 +22,7 @@ const Home = () => {
             <Blog />
             <TalkWith />
             <About />
+            <Contact />
         </div>
     );
 };
