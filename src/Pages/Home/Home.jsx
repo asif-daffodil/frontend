@@ -3,6 +3,7 @@ import EventGallery from "../../Components/HomeComponents/EventGallery/EventGall
 import HomeSlider from "../../Components/HomeComponents/HomeSlider/HomeSlider";
 import LatestNotice from "../../Components/HomeComponents/LatestNotice/LatestNotice";
 import MBBSProgram from "../../Components/HomeComponents/MBBSProgram/MBBSProgram";
+import OurFaculty from "../../Components/HomeComponents/OurFaculty/OurFaculty";
 
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
             <LatestNotice />
             <MBBSProgram />
             <EventGallery />
+            <OurFaculty />
         </div>
     );
 };
