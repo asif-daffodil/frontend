@@ -5,6 +5,7 @@ import HomeSlider from "../../Components/HomeComponents/HomeSlider/HomeSlider";
 import LatestNotice from "../../Components/HomeComponents/LatestNotice/LatestNotice";
 import MBBSProgram from "../../Components/HomeComponents/MBBSProgram/MBBSProgram";
 import OurFaculty from "../../Components/HomeComponents/OurFaculty/OurFaculty";
+import TalkWith from "../../Components/HomeComponents/TalkWith/TalkWith";
 
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
             <EventGallery />
             <OurFaculty />
             <Blog />
+            <TalkWith />
         </div>
     );
 };
