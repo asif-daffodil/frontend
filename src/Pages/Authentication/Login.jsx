@@ -1,5 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import bannerImg from '../../images/slides/homeSlide1.jpg';
+import { useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
+import axios from 'axios';
+import useUser from '../../hooks/useUser';
 
 const bannerBg = {
     backgroundImage: `url(${bannerImg})`,
@@ -12,6 +16,27 @@ const bannerBg = {
 
 const Signup = () => {
     const navigate = useNavigate();
+    const [user, setUser] = useUser();
+
+    if (user) {
+        navigate('/');
+    }
+
+
+    const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
+
+    const onSubmit = data => {
+        axios.post('http://localhost:8000/api/login', data, { withCredentials: true })
+            .then(response => {
+                console.log(response);
+                navigate('/');
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+    };
+
     return (
         <div className='container-fluid'>
             <div className="row">
@@ -27,14 +52,34 @@ const Signup = () => {
                         <div className="row">
                             <div className="col-md-6 py-5">
                                 <h1 className='display-6 text-primary mb-3'>Applicant Login</h1>
-                                <form action="" method='post' className='mb-4'>
+                                <form action="" method='post' className='mb-4' onSubmit={handleSubmit(onSubmit)}>
                                     <div className="mb-3">
                                         <label htmlFor="email" className="form-label">Email address</label>
-                                        <input type="email" className="form-control" id="email" aria-describedby="emailHelp" />
+                                        <input type="email" className="form-control" id="email" aria-describedby="emailHelp" {...register("email", {
+                                            required: {
+                                                value: true,
+                                                message: "Email is required"
+
+                                            }, pattern: {
+                                                value: /\S+@\S+\.\S+/,
+                                                message: "Invalid email format"
+                                            }
+                                        })} />
+                                        {errors.email && <p className='text-danger small'>
+                                            {errors.email.message}
+                                        </p>}
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="password" className="form-label">Password</label>
-                                        <input type="password" className="form-control" id="password" />
+                                        <input type="password" className="form-control" id="password" {...register("password", {
+                                            required: {
+                                                value: true,
+                                                message: "Password is required"
+                                            }
+                                        })} />
+                                        {errors.password && <p className='text-danger small'>
+                                            {errors.password.message}
+                                        </p>}
                                     </div>
                                     <button type="submit" className="btn btn-primary">Login</button>
                                 </form>

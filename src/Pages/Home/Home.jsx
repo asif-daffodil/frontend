@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import About from "../../Components/HomeComponents/About/About";
 import Blog from "../../Components/HomeComponents/Blog/Blog";
 import Contact from "../../Components/HomeComponents/Contact/Contact";
@@ -11,6 +12,13 @@ import TalkWith from "../../Components/HomeComponents/TalkWith/TalkWith";
 
 
 const Home = () => {
+    useEffect(() => {
+        // Scroll to the top of the page when the component mounts
+        window.scrollTo({
+            top: 0,
+            behavior: "instant",
+        });
+    }, []);
     return (
         <div>
             <HomeSlider />

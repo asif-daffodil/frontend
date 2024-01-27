@@ -1,8 +1,19 @@
 import { faFacebook, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import useUser from "../../hooks/useUser";
 
 const TopHeader = () => {
+    const [user, setUser] = useUser();
+    const logout = (event) => {
+        event.preventDefault();
+        fetch('http://localhost:8000/api/logout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        }).then(() => setUser(null));
+    }
+
     return (
         <div className="container">
             <div className="row py-2">
@@ -16,7 +27,11 @@ const TopHeader = () => {
                 </div>
                 <div className="col-md-6 text-end">
                     <button className="btn btn-outline-primary me-2 btn-sm">Truck your application</button>
-                    <Link to='/authentication' className="btn btn-link btn-sm text-decoration-none ">Login/Create Accounts</Link>
+                    {user ? (
+                        <button className="btn btn-outline-primary me-2 btn-sm" onClick={logout}>Logout</button>
+                    ) : (
+                        <Link to='/authentication' className="btn btn-outline-primary me-2 btn-sm">Login/Create Account</Link>
+                    )}
                 </div>
             </div>
         </div>

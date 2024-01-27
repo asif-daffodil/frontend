@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import bannerImg from '../../images/slides/homeSlide1.jpg';
 import { useState } from 'react';
+import axios from 'axios';
+import useUser from '../../hooks/useUser';
 
 const bannerBg = {
     backgroundImage: `url(${bannerImg})`,
@@ -11,8 +13,14 @@ const bannerBg = {
 };
 
 const Signup = () => {
-    const monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const navigate = useNavigate();
+    const [user, setUser] = useUser();
+
+    if (user) {
+        navigate('/');
+    }
+
+    const monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     const [firstName, setFirstName] = useState("");
     const [errFirstName, setErrFirstName] = useState("");
@@ -26,13 +34,13 @@ const Signup = () => {
     const [errEmail, setErrEmail] = useState("");
     const [crrEmail, setCrrEmail] = useState(false);
 
-    const [number, setNumber] = useState("");
-    const [errNumber, setErrNumber] = useState("");
-    const [crrNumber, setCrrNumber] = useState(false);
+    const [phone, setPhone] = useState("");
+    const [errPhone, setErrPhone] = useState("");
+    const [crrPhone, setCrrPhone] = useState(false);
 
-    const [parentNumber, setParentNumber] = useState("");
-    const [errParentNumber, setErrParentNumber] = useState("");
-    const [crrParentNumber, setCrrParentNumber] = useState(false);
+    const [parent_phone, setParent_phone] = useState("");
+    const [errParentPhone, setErrParentPhone] = useState("");
+    const [crrParentPhone, setCrrParentPhone] = useState(false);
 
     const [month, setMonth] = useState("");
     const [errMonth, setErrMonth] = useState("");
@@ -106,31 +114,31 @@ const Signup = () => {
         }
     }
 
-    const handleNumber = (e) => {
-        let numberVal = e.target.value;
-        setNumber(numberVal);
+    const handlePhone = (e) => {
+        let phoneVal = e.target.value;
+        setPhone(phoneVal);
 
-        if (numberVal.length < 10) {
-            setErrNumber("Invalid number");
-        } else if (numberVal.match(/[^+0-9 *$]/)) {
-            setErrNumber("Invalid number");
+        if (phoneVal.length < 10) {
+            setErrPhone("Invalid phone");
+        } else if (phoneVal.match(/[^+0-9 *$]/)) {
+            setErrPhone("Invalid phone");
         } else {
-            setErrNumber("");
-            setCrrNumber(true);
+            setErrPhone("");
+            setCrrPhone(true);
         }
     }
 
-    const handleParentNumber = (e) => {
-        let parentNumberVal = e.target.value;
-        setParentNumber(parentNumberVal);
+    const handleParentPhone = (e) => {
+        let parentPhoneVal = e.target.value;
+        setParent_phone(parentPhoneVal);
 
-        if (parentNumberVal.length < 10) {
-            setErrParentNumber("Invalid number");
-        } else if (parentNumberVal.match(/[^+0-9 *$]/)) {
-            setErrParentNumber("Invalid number");
+        if (parentPhoneVal.length < 10) {
+            setErrParentPhone("Invalid phone");
+        } else if (parentPhoneVal.match(/[^+0-9 *$]/)) {
+            setErrParentPhone("Invalid phone");
         } else {
-            setErrParentNumber("");
-            setCrrParentNumber(true);
+            setErrParentPhone("");
+            setCrrParentPhone(true);
         }
     }
 
@@ -169,12 +177,128 @@ const Signup = () => {
         } else if (!passwordVal.match(/[A-Z]/g)) {
             setErrPassword("Password must contain at least one uppercase letter");
         } else if (!passwordVal.match(/[0-9]/g)) {
-            setErrPassword("Password must contain at least one number");
+            setErrPassword("Password must contain at least one phone");
         } else if (!passwordVal.match(/[^a-zA-Z\d]/g)) {
             setErrPassword("Password must contain at least one special character");
         } else {
             setErrPassword("");
             setCrrPassword(true);
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        // validation
+
+        let firstNameVal = e.target.firstName.value;
+        if (firstNameVal < 3) {
+            setErrFirstName("First name must be at least 3 characters long");
+        } else if (firstNameVal.match(/[^a-zA-Z. *$]/)) {
+            setErrFirstName("First name must contain only letters");
+        } else {
+            setErrFirstName("");
+            setCrrFirstName(true);
+        }
+
+        let lastNameVal = e.target.lastName.value;
+        if (lastNameVal < 3) {
+            setErrLastName("Last name must be at least 3 characters long");
+        } else if (lastNameVal.match(/[^a-zA-Z. *$]/)) {
+            setErrLastName("Last name must contain only letters");
+        } else {
+            setErrLastName("");
+            setCrrLastName(true);
+        }
+
+        let emailVal = e.target.email.value;
+        if (emailVal < 3) {
+            setErrEmail("Email must be at least 3 characters long");
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+            setErrEmail("Email must be valid");
+        } else {
+            setErrEmail("");
+            setCrrEmail(true);
+        }
+
+        let phoneVal = e.target.phone.value;
+        if (phoneVal < 10) {
+            setErrPhone("Invalid phone");
+        } else if (phoneVal.match(/[^+0-9 *$]/)) {
+            setErrPhone("Invalid phone");
+        } else {
+            setErrPhone("");
+            setCrrPhone(true);
+        }
+
+        let parentPhoneVal = e.target.parentPhone.value;
+        if (parentPhoneVal < 10) {
+            setErrParentPhone("Invalid phone");
+        } else if (parentPhoneVal.match(/[^+0-9 *$]/)) {
+            setErrParentPhone("Invalid phone");
+        } else {
+            setErrParentPhone("");
+            setCrrParentPhone(true);
+        }
+
+        let monthVal = e.target.month.value;
+        if (monthVal.length == 0) {
+            setErrMonth("Month must be selected");
+        } else {
+            setErrMonth("");
+            setCrrMonth(true);
+        }
+
+        let dayVal = e.target.day.value;
+        if (!parseInt(dayVal) || parseInt(dayVal) > 31) {
+            setErrDay("Invalid day");
+        } else {
+            setErrDay("");
+            setCrrDay(true);
+        }
+
+        let yearVal = e.target.year.value;
+        if (!parseInt(yearVal) || parseInt(yearVal) > 2021) {
+            setErrYear("Invalid year");
+        } else {
+            setErrYear("");
+            setCrrYear(true);
+        }
+
+        let passwordVal = e.target.password.value;
+        if (passwordVal.length < 8) {
+            setErrPassword("Password must be at least 8 characters long");
+        } else if (!passwordVal.match(/[a-z]/g)) {
+            setErrPassword("Password must contain at least one lowercase letter");
+        } else if (!passwordVal.match(/[A-Z]/g)) {
+            setErrPassword("Password must contain at least one uppercase letter");
+        } else if (!passwordVal.match(/[0-9]/g)) {
+            setErrPassword("Password must contain at least one phone");
+        } else if (!passwordVal.match(/[^a-zA-Z\d]/g)) {
+            setErrPassword("Password must contain at least one special character");
+        } else {
+            setErrPassword("");
+            setCrrPassword(true);
+        }
+
+
+
+        if (crrFirstName && crrLastName && crrEmail && crrPhone && crrParentPhone && crrMonth && crrDay && crrYear && crrPassword) {
+            const response = await axios.post('http://localhost:8000/api/register', {
+                firstName,
+                lastName,
+                email,
+                phone,
+                parent_phone,
+                month,
+                day,
+                year,
+                password
+            });
+
+            // Handle successful response
+            if (response.data.message == "User successfully registered") {
+                navigate("/login");
+            }
         }
     }
 
@@ -193,19 +317,19 @@ const Signup = () => {
                         <div className="row">
                             <div className="col-md-6 py-5">
                                 <h1 className='display-6 text-primary mb-3'>Applicant Signup</h1>
-                                <form action="" method='post' className='mb-4'>
+                                <form action="" method='post' className='mb-4' onSubmit={handleSubmit}>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="mb-3">
-                                                <label htmlFor="fname" className="form-label">First Name</label>
-                                                <input type="text" className="form-control" value={firstName} onChange={handleFirstName} id="fname" />
+                                                <label htmlFor="firstName" className="form-label">First Name</label>
+                                                <input type="text" className="form-control" value={firstName} onChange={handleFirstName} id="firstName" name="firstName" />
                                                 <p className='small text-danger'>{errFirstName}</p>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="mb-3">
-                                                <label htmlFor="lname" className="form-label">Last Name</label>
-                                                <input type="text" className="form-control" value={lastName} onChange={handleLastName} id="lname" />
+                                                <label htmlFor="lastName" className="form-label">Last Name</label>
+                                                <input type="text" className="form-control" value={lastName} onChange={handleLastName} id="lastName" />
                                                 <p className='small text-danger'>{errLastName}</p>
                                             </div>
                                         </div>
@@ -216,14 +340,14 @@ const Signup = () => {
                                         <p className='small text-danger'>{errEmail}</p>
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="number" className="form-label">Applicant number</label>
-                                        <input type="text" className="form-control" id="number" value={number} onChange={handleNumber} />
-                                        <p className='small text-danger'>{errNumber}</p>
+                                        <label htmlFor="phone" className="form-label">Applicant phone</label>
+                                        <input type="text" className="form-control" id="phone" value={phone} onChange={handlePhone} />
+                                        <p className='small text-danger'>{errPhone}</p>
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="parentNumber" className="form-label">Parent Number</label>
-                                        <input type="text" className="form-control" id="parentNumber" value={parentNumber} onChange={handleParentNumber} />
-                                        <p className='small text-danger'>{errParentNumber}</p>
+                                        <label htmlFor="parentPhone" className="form-label">Parent Phone</label>
+                                        <input type="text" className="form-control" id="parentPhone" value={parent_phone} onChange={handleParentPhone} />
+                                        <p className='small text-danger'>{errParentPhone}</p>
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="">Date of Birth</label>
@@ -242,11 +366,11 @@ const Signup = () => {
                                                 <p className='small text-danger'>{errMonth}</p>
                                             </div>
                                             <div className="col-md-4">
-                                                <input type="text" className="form-control" placeholder='Day' value={day} onChange={handleDay} />
+                                                <input type="text" className="form-control" placeholder='Day' value={day} onChange={handleDay} id="day" name="day" />
                                                 <p className='small text-danger'>{errDay}</p>
                                             </div>
                                             <div className="col-md-4">
-                                                <input type="text" className="form-control" placeholder='Year' value={year} onChange={handleYear} />
+                                                <input type="text" className="form-control" placeholder='Year' value={year} onChange={handleYear} id="year" name="year" />
                                                 <p className='small text-danger'>{errYear}</p>
                                             </div>
                                         </div>
