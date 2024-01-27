@@ -7,6 +7,9 @@ import Faculty from "./Pages/Faculty/Faculty";
 import Program from "./Pages/Program/Program";
 import Notice from "./Pages/Notice/Notice";
 import Apply from "./Pages/Apply/Apply";
+import Authentication from "./Pages/Authentication/Authentication";
+import Login from "./Pages/Authentication/Login";
+import Signup from "./Pages/Authentication/Signup";
 
 
 const router = createBrowserRouter([
@@ -20,7 +23,10 @@ const router = createBrowserRouter([
             { path: "/program", element: <Program /> },
             { path: "/notice", element: <Notice /> },
             { path: "/contact", element: <Contact /> },
-            { path: "/apply", element: <Apply /> }
+            { path: "/apply", element: <Apply /> },
+            { path: "/Authentication", element: <Authentication /> },
+            { path: "/login", element: <Login /> },
+            { path: "/signup", element: <Signup /> }
         ],
     },
 ]);

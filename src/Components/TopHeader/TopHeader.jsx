@@ -16,7 +16,7 @@ const TopHeader = () => {
                 </div>
                 <div className="col-md-6 text-end">
                     <button className="btn btn-outline-primary me-2 btn-sm">Truck your application</button>
-                    <Link to='/login' className="btn btn-link btn-sm text-decoration-none ">Login</Link>
+                    <Link to='/authentication' className="btn btn-link btn-sm text-decoration-none ">Login/Create Accounts</Link>
                 </div>
             </div>
         </div>

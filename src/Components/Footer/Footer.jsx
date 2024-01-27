@@ -1,8 +1,8 @@
-
+import logo from '../../images/logo.png';
 
 const Footer = () => {
     return (
-        <footer className="container-fluid bg-btn-primary  text-bg-primary py-5">
+        <footer className="container-fluid bg-btn-primary  text-bg-primary pt-5">
             <div className="container py-5">
                 <div className="row">
                     <div className="col-md-4 d-flex flex-column justify-content-center align-items-start ">
@@ -33,6 +33,20 @@ const Footer = () => {
                             </div>
                             <div className="col-md-4"></div>
                             <div className="col-md-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="row bg-white">
+                <div className="col-md-12">
+                    <div className="container">
+                        <div className="row py-3">
+                            <div className="col-md-6">
+                                <img src={logo} alt="" className='img-fluid' />
+                            </div>
+                            <div className="col-md-6 small d-flex justify-content-end align-items-center   text-secondary ">
+                                &copy; 2024 SMU. All Rights Reserved.
+                            </div>
                         </div>
                     </div>
                 </div>
