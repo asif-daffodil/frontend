@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import bannerImg from '../../images/slides/homeSlide1.jpg';
 import { useForm } from 'react-hook-form';
-import { useQuery } from 'react-query';
 import axios from 'axios';
 import useUser from '../../hooks/useUser';
+import { checkAuth, authBtn } from '../../hooks/checkAuth';
+import LogoutBtn from '../../Components/AuthBtns.jsx/LogoutBtn';
+import { batch } from '@preact/signals-react';
 
 const bannerBg = {
     backgroundImage: `url(${bannerImg})`,
@@ -28,7 +30,11 @@ const Signup = () => {
     const onSubmit = data => {
         axios.post('http://localhost:8000/api/login', data, { withCredentials: true })
             .then(response => {
-                console.log(response);
+                setUser(response.data);
+                batch(() => {
+                    checkAuth.value = true;
+                    authBtn.value = <LogoutBtn />;
+                });
                 navigate('/');
             })
             .catch(error => {

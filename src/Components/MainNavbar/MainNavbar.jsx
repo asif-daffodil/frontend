@@ -19,6 +19,7 @@ function MainNavbar() {
                         <NavLink to="/faculty" className="nav-link">Faculty</NavLink>
                         <NavLink to="/program" className="nav-link">Program</NavLink>
                         <NavLink to="/notice" className="nav-link">Notice</NavLink>
+                        <NavLink to="/blog" className="nav-link">Blog</NavLink>
                         <NavLink to="/contact" className="nav-link">Contact Us</NavLink>
                         <NavLink to="/apply" className="btn btn-light">Apply</NavLink>
                     </Nav>

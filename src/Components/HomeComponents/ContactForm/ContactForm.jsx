@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLocation, faLocationDot, faMailBulk, faMap, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 
 
-const Contact = () => {
+const ContactForm = () => {
     return (
         <div className="container-fluid commonbg">
             <div className="container py-5">
@@ -56,4 +56,4 @@ const Contact = () => {
     );
 };
 
-export default Contact;
+export default ContactForm;

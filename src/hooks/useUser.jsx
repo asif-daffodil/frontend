@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { checkAuth } from "./checkAuth";
 
 
 const useUser = () => {
@@ -15,6 +16,7 @@ const useUser = () => {
                 const content = await response.json();
 
                 setUser(content);
+                checkAuth.value = true;
             }
         )()
     }, [user]);

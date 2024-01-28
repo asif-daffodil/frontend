@@ -1,7 +1,7 @@
 import blogImg from '../../../images/blog/blog.png';
 import author from '../../../images/blog/author.png';
 
-const Blog = () => {
+const BlogPost = () => {
     return (
         <div className="container-fluid bg-primary-subtle py-5">
             <div className="container">
@@ -89,4 +89,4 @@ const Blog = () => {
     );
 };
 
-export default Blog;
+export default BlogPost;

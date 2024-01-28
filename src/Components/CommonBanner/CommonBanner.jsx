@@ -1,4 +1,4 @@
-import bannerImg from '../../images/slides/homeSlide1.jpg';
+import bannerImg from "../../images/slides/homeSlide1.jpg";
 
 const bannerBg = {
     backgroundImage: `url(${bannerImg})`,
@@ -8,14 +8,14 @@ const bannerBg = {
     backgroundAttachment: "fixed",
 };
 
-const AboutBanner = () => {
+const CommonBanner = ({ title, subtitle }) => {
     return (
-        <div className='container-fluid'>
+        <div className="container-fluid">
             <div className="row">
                 <div className="col-md-12" style={bannerBg}>
                     <div className='container py-0 py-md-5 my-0 my-md-5'>
-                        <h1 className='display-1 text-primary'>About Us</h1>
-                        <p className='small'>Any question or remarks? Just write us a message!</p>
+                        <h1 className='display-1 text-primary'>{title}</h1>
+                        <p className='small'>{subtitle}</p>
                         <button className='btn btn-outline-primary '>Learn More</button>
                     </div>
                 </div>
@@ -24,4 +24,4 @@ const AboutBanner = () => {
     );
 };
 
-export default AboutBanner;
+export default CommonBanner;

@@ -1,18 +1,11 @@
 import { faFacebook, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import useUser from "../../hooks/useUser";
+import { authBtn } from "../../hooks/checkAuth";
+import { useSignals } from "@preact/signals-react/runtime";
+
 
 const TopHeader = () => {
-    const [user, setUser] = useUser();
-    const logout = (event) => {
-        event.preventDefault();
-        fetch('http://localhost:8000/api/logout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
-        }).then(() => setUser(null));
-    }
+    useSignals();
 
     return (
         <div className="container">
@@ -27,11 +20,7 @@ const TopHeader = () => {
                 </div>
                 <div className="col-md-6 text-end">
                     <button className="btn btn-outline-primary me-2 btn-sm">Truck your application</button>
-                    {user ? (
-                        <button className="btn btn-outline-primary me-2 btn-sm" onClick={logout}>Logout</button>
-                    ) : (
-                        <Link to='/authentication' className="btn btn-outline-primary me-2 btn-sm">Login/Create Account</Link>
-                    )}
+                    {authBtn.value}
                 </div>
             </div>
         </div>

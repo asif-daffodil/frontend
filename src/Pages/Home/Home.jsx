@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import About from "../../Components/HomeComponents/About/About";
-import Blog from "../../Components/HomeComponents/Blog/Blog";
-import Contact from "../../Components/HomeComponents/Contact/Contact";
+import BlogPost from "../../Components/HomeComponents/BlogPost/BlogPost";
+import ContactForm from "../../Components/HomeComponents/ContactForm/ContactForm";
 import Count from "../../Components/HomeComponents/Count/Count";
 import EventGallery from "../../Components/HomeComponents/EventGallery/EventGallery";
 import HomeSlider from "../../Components/HomeComponents/HomeSlider/HomeSlider";
@@ -27,10 +27,10 @@ const Home = () => {
             <MBBSProgram />
             <EventGallery />
             <OurFaculty />
-            <Blog />
+            <BlogPost />
             <TalkWith />
             <About />
-            <Contact />
+            <ContactForm />
         </div>
     );
 };
