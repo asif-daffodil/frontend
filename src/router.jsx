@@ -11,6 +11,8 @@ import Authentication from "./Pages/Authentication/Authentication";
 import Login from "./Pages/Authentication/Login";
 import Signup from "./Pages/Authentication/Signup";
 import Blog from "./Pages/Blog/Blog";
+import Application from "./Pages/Aplication/Application";
+import StartApplication from "./Pages/Aplication/StartApplication";
 
 
 const router = createBrowserRouter([
@@ -26,9 +28,11 @@ const router = createBrowserRouter([
             { path: "/blog", element: <Blog /> },
             { path: "/contact", element: <Contact /> },
             { path: "/apply", element: <Apply /> },
-            { path: "/Authentication", element: <Authentication /> },
+            { path: "/authentication", element: <Authentication /> },
             { path: "/login", element: <Login /> },
-            { path: "/signup", element: <Signup /> }
+            { path: "/signup", element: <Signup /> },
+            { path: "/application", element: <Application /> },
+            { path: "/startApplication", element: <StartApplication /> }
         ],
     },
 ]);

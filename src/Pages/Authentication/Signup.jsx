@@ -14,7 +14,7 @@ const bannerBg = {
 
 const Signup = () => {
     const navigate = useNavigate();
-    const [user, setUser] = useUser();
+    const [user] = useUser();
 
     if (user) {
         navigate('/');
@@ -380,7 +380,7 @@ const Signup = () => {
                                         <input type="password" className="form-control" id="password" value={password} onChange={handlePassword} />
                                         <p className='small text-danger'>{errPassword}</p>
                                     </div>
-                                    <button type="submit" className="btn btn-primary">Login</button>
+                                    <button type="submit" className="btn btn-primary">Sign Up</button>
                                 </form>
                                 <p className='small'>
                                     Already have an account? <button onClick={() => navigate("/login")} className='btn btn-primary btn-sm'>Login</button> Here

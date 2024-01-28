@@ -2,10 +2,16 @@ import { faFacebook, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { authBtn } from "../../hooks/checkAuth";
 import { useSignals } from "@preact/signals-react/runtime";
+import { useNavigate } from "react-router-dom";
 
 
 const TopHeader = () => {
     useSignals();
+    const navigate = useNavigate();
+
+    const goToApplication = () => {
+        navigate('/application');
+    };
 
     return (
         <div className="container">
@@ -19,7 +25,7 @@ const TopHeader = () => {
                     </a>
                 </div>
                 <div className="col-md-6 text-end">
-                    <button className="btn btn-outline-primary me-2 btn-sm">Truck your application</button>
+                    <button className="btn btn-outline-primary me-2 btn-sm" onClick={goToApplication} >Truck your application</button>
                     {authBtn.value}
                 </div>
             </div>
