@@ -1,17 +1,12 @@
 
-import { useContext } from "react";
-import { authBtn, checkAuth } from "../../hooks/checkAuth";
-import useUser from "../../hooks/useUser";
-import LoginBtn from "./LoginBtn";
-import { useSignals } from "@preact/signals-react/runtime";
-import AuthContext from "../../hooks/AuthContext";
+
+
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/auth";
 
 
 const LogoutBtn = () => {
-    useSignals();
-    const [setUser] = useUser();
-    const auth = useContext(AuthContext);
+    const auth = useAuth();
     const navigate = useNavigate();
 
 
@@ -21,10 +16,7 @@ const LogoutBtn = () => {
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include'
         }).then(() => {
-            auth.user = null;
-            authBtn.value = <LoginBtn />;
-            checkAuth.value = false;
-            setUser(null);
+            auth.logout();
             navigate('/login');
         });
     };

@@ -1,10 +1,17 @@
 import CommonBanner from "../../Components/CommonBanner/CommonBanner";
-import { useContext } from "react";
-import AuthContext from "../../hooks/AuthContext";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/auth";
 
 const StartApplication = () => {
-    const auth = useContext(AuthContext);
+    const auth = useAuth();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!auth.user) {
+            navigate('/login');
+        }
+    }, [auth.user]);
     const monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octber', 'November', 'December'];
     //  react form hock
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
@@ -25,7 +32,7 @@ const StartApplication = () => {
                         <form action="" method="post" onSubmit={handleSubmit(onSubmit)}>
                             <div className="mb-3">
                                 <label htmlFor="firstName" className="form-label">First Name</label>
-                                <input type="text" className="form-control" id="firstName" defaultValue={auth?.user?.firstName} {...register('firstName', {
+                                <input type="text" className="form-control" id="firstName" defaultValue={auth.user.firstName} {...register('firstName', {
                                     required: {
                                         value: true,
                                         message: "First Name is required"
@@ -38,7 +45,7 @@ const StartApplication = () => {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="lastName" className="form-label">Last Name</label>
-                                <input type="text" className="form-control" id="lastName" defaultValue={auth?.user?.lastName} {...register('lastName', {
+                                <input type="text" className="form-control" id="lastName" defaultValue={auth.user.lastName} {...register('lastName', {
                                     required: {
                                         value: true,
                                         message: "Last Name is required"
@@ -63,14 +70,14 @@ const StartApplication = () => {
                                             {
                                                 monthName.map((month, index) => {
                                                     return (
-                                                        <option value={month} key={index + 1} selected={month === auth?.user?.month ? true : false}>{month}</option>
+                                                        <option value={month} key={index + 1} selected={month === auth.user.month ? true : false}>{month}</option>
                                                     );
                                                 })
                                             }
                                         </select>
                                     </div>
                                     <div className="col-md-4">
-                                        <input type="text" className="form-control" placeholder='Day' id="day" name="day" defaultValue={auth?.user?.day} {...register('day', {
+                                        <input type="text" className="form-control" placeholder='Day' id="day" name="day" defaultValue={auth.user.day} {...register('day', {
                                             required: {
                                                 value: true,
                                                 message: "Day is required"
@@ -82,7 +89,7 @@ const StartApplication = () => {
                                         })} />
                                     </div>
                                     <div className="col-md-4">
-                                        <input type="text" className="form-control" placeholder='Year' id="year" name="year" defaultValue={auth?.user?.year} {...register('year', {
+                                        <input type="text" className="form-control" placeholder='Year' id="year" name="year" defaultValue={auth.user.year} {...register('year', {
                                             required: {
                                                 value: true,
                                                 message: "Year is required"
