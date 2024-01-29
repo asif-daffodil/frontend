@@ -13,6 +13,7 @@ import Signup from "./Pages/Authentication/Signup";
 import Blog from "./Pages/Blog/Blog";
 import Application from "./Pages/Aplication/Application";
 import StartApplication from "./Pages/Aplication/StartApplication";
+import RequireAuth from "./Components/RequireAuth";
 
 
 const router = createBrowserRouter([
@@ -31,8 +32,8 @@ const router = createBrowserRouter([
             { path: "/authentication", element: <Authentication /> },
             { path: "/login", element: <Login /> },
             { path: "/signup", element: <Signup /> },
-            { path: "/application", element: <Application /> },
-            { path: "/startApplication", element: <StartApplication /> }
+            { path: "/application", element: <RequireAuth><Application /></RequireAuth> },
+            { path: "/startApplication", element: <RequireAuth><StartApplication /></RequireAuth> }
         ],
     },
 ]);
