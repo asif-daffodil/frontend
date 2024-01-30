@@ -27,8 +27,7 @@ const TopHeader = () => {
                 </div>
                 <div className="col-md-6 text-end">
                     <button className="btn btn-outline-primary me-2 btn-sm" onClick={goToApplication} >Truck your application</button>
-                    {auth.user || <LoginBtn />}
-                    {auth.user && <LogoutBtn />}
+                    {auth.user[0] && <LogoutBtn /> || <LoginBtn />}
                 </div>
             </div>
         </div>

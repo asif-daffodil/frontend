@@ -7,10 +7,10 @@ const RequireAuth = ({ children }) => {
     const auth = useAuth();
     const navigate = useNavigate();
     useEffect(() => {
-        if (!auth.user) {
+        if (typeof auth.user[0] === 'undefined') {
             navigate('/login');
         }
-    }, [auth.user]);
+    }, [auth.user[0]]);
 
     return children;
 };

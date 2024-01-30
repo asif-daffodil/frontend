@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import bannerImg from '../../images/slides/homeSlide1.jpg';
 import { useState } from 'react';
 import axios from 'axios';
-import useUser from '../../hooks/useUser';
+import { useAuth } from '../../hooks/auth';
+import { Swal } from 'sweetalert2/dist/sweetalert2';
 
 const bannerBg = {
     backgroundImage: `url(${bannerImg})`,
@@ -14,9 +15,8 @@ const bannerBg = {
 
 const Signup = () => {
     const navigate = useNavigate();
-    const [user] = useUser();
-
-    if (user) {
+    const auth = useAuth();
+    if (auth.user[0]) {
         navigate('/');
     }
 
@@ -297,6 +297,14 @@ const Signup = () => {
 
             // Handle successful response
             if (response.data.message == "User successfully registered") {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'You have been registered',
+                    icon: 'success',
+                    timer: 1500,
+                    position: "top-end",
+                    showConfirmButton: false,
+                });
                 navigate("/login");
             }
         }

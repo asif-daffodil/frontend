@@ -3,6 +3,7 @@ import bannerImg from '../../images/slides/homeSlide1.jpg';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useAuth } from '../../hooks/auth';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 const bannerBg = {
     backgroundImage: `url(${bannerImg})`,
@@ -17,7 +18,7 @@ const Signup = () => {
     const navigate = useNavigate();
     const auth = useAuth();
 
-    if (auth.user) {
+    if (auth.user[0]) {
         navigate('/');
     }
 
@@ -27,8 +28,18 @@ const Signup = () => {
     const onSubmit = data => {
         axios.post('http://localhost:8000/api/login', data, { withCredentials: true })
             .then(response => {
-                auth.login(response.data);
-                navigate('/');
+                auth.login(response.data.user);
+                Swal.fire({
+                    text: 'Login Successful!',
+                    icon: 'success',
+                    timer: 1500,
+                    position: "top-end",
+                    showConfirmButton: false,
+                }).then(() => {
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 2000);
+                })
             })
             .catch(error => {
                 console.log(error);
