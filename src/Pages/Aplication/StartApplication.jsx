@@ -1,5 +1,5 @@
 import CommonBanner from "../../Components/CommonBanner/CommonBanner";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth";
@@ -11,7 +11,16 @@ const StartApplication = () => {
     const auth = useAuth();
     const navigate = useNavigate();
 
+
     useEffect(() => {
+        (async () => {
+            await axios.get('http://localhost:8000/api/checkpreaplication', { withCredentials: true }).then(response => {
+                console.log(response);
+                if (response.data.message === 'You already have an application') {
+                    navigate('/');
+                }
+            })
+        })();
         if (!auth.user[0]) {
             navigate('/login');
         }
@@ -19,8 +28,8 @@ const StartApplication = () => {
     const monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octber', 'November', 'December'];
     //  react form hock
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
-    const onSubmit = data => {
-        axios.post('http://localhost:8000/api/updateFirstPart', data, { withCredentials: true }).then(response => {
+    const onSubmit = async data => {
+        await axios.post('http://localhost:8000/api/updateFirstPart', data, { withCredentials: true }).then(response => {
             if (response.data.message === 'User successfully updated') {
                 Swal.fire({
                     text: 'User successfully updated',
