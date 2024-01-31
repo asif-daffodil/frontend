@@ -35,7 +35,7 @@ const router = createBrowserRouter([
             { path: "/signup", element: <Signup /> },
             { path: "/application", element: <RequireAuth><Application /></RequireAuth> },
             { path: "/startApplication", element: <RequireAuth><StartApplication /></RequireAuth> },
-            { path: "/applicationStatus", element: <ApplicationStatus />}
+            { path: "/applicationStatus", element: <RequireAuth><ApplicationStatus /></RequireAuth> }
         ],
     },
 ]);

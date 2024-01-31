@@ -5,20 +5,14 @@ import TopHeader from "../Components/TopHeader/TopHeader";
 import { useAuth } from "../hooks/auth";
 import axios from "axios";
 import { useQuery } from "react-query";
-import { useEffect } from "react";
 
 const MainLayouts = () => {
 
     const auth = useAuth();
     const { isLoading, data } = useQuery('repoData', () =>
-        axios.get('http://localhost:8000/api/user', { withCredentials: true }).then(response => response.data)
+        axios.get('http://localhost:8000/api/user', { withCredentials: true }).then(response => auth.login(response.data.user))
     )
 
-    useEffect(() => {
-        if (!auth.user[0] && data) {
-            auth.login(data);
-        }
-    }, [auth.user[0]], data);
 
 
     return (
