@@ -6,25 +6,24 @@ import { useAuth } from "../../hooks/auth";
 import axios from "axios";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import PreApplication from "../../Components/PreApplication/PreApplication";
+import { useQuery } from "react-query";
 
 const StartApplication = () => {
     const auth = useAuth();
     const navigate = useNavigate();
 
-
+    const { isLoading, data } = useQuery('repoData', () =>
+        axios.get('http://localhost:8000/api/checkpreaplication', { withCredentials: true }).then(response => response.data)
+    )
+    console.log(data);
     useEffect(() => {
-        (async () => {
-            await axios.get('http://localhost:8000/api/checkpreaplication', { withCredentials: true }).then(response => {
-                console.log(response);
-                if (response.data.message === 'You already have an application') {
+            if (data.data.message === 'You already have an application') {
                     navigate('/applicationStatus');
                 }
-            })
-        })();
-        if (!auth.user[0]) {
-            navigate('/login');
-        }
-    }, [auth.user[0]]);
+            if (!auth.user[0]) {
+                navigate('/login');
+            }
+    }, [auth.user[0]], data);
     const monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octber', 'November', 'December'];
     //  react form hock
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
@@ -47,7 +46,8 @@ const StartApplication = () => {
     return (
         <>
             <CommonBanner title="Start Application" subtitle="Any question or remarks? Just write us a message!" />
-            <div className="container py-5">
+            {isLoading ? <div className="col-md-12 text-center">Loading...</div> : (
+                <div className="container py-5">
                 <div className="row">
                     <div className="col-md-12">
                         <h1 className="display-6 ">Start a <span className="text-primary">New Application</span></h1>
@@ -148,6 +148,7 @@ const StartApplication = () => {
                     <PreApplication />
                 </div >
             </div >
+            )}
         </>
     );
 };
