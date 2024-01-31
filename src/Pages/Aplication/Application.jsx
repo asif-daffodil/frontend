@@ -1,14 +1,33 @@
 import { useNavigate } from "react-router-dom";
 import CommonBanner from "../../Components/CommonBanner/CommonBanner";
+import { useEffect } from "react";
+import axios from "axios";
+import { useAuth } from "../../hooks/auth";
+import { useQuery } from "react-query";
 
 const Application = () => {
+    const auth = useAuth();
     const navigate = useNavigate();
+
+    const { isLoading, data } = useQuery('repoData', () =>
+    axios.get('http://localhost:8000/api/checkpreaplication', { withCredentials: true }).then(response => response.data)
+    )
+    useEffect(() => {
+        if (!auth.user[0]) {
+            navigate('/login');
+        }
+        if(data?.message === 'You already have an application') {
+            navigate('/applicationStatus');
+        }
+    }, [auth.user[0]], data);
+
     return (
         <>
             <CommonBanner title="Your Application" subtitle="Any question or remarks? Just write us a message!" />
             <div className="container">
                 <div className="row py-5">
-                    <div className="col-md-12">
+                    {isLoading ? <div className="col-md-12 text-center">Loading...</div> : (
+                        <div className="col-md-12">
                         <h1 className="display-6 text-primary">Start Application</h1>
                         <div className="row">
                             <p className="small col-md-6">
@@ -37,6 +56,7 @@ const Application = () => {
                             </div>
                         </div>
                     </div>
+                    )}
                 </div>
             </div>
         </>

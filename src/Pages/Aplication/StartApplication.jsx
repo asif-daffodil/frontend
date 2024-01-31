@@ -17,7 +17,7 @@ const StartApplication = () => {
             await axios.get('http://localhost:8000/api/checkpreaplication', { withCredentials: true }).then(response => {
                 console.log(response);
                 if (response.data.message === 'You already have an application') {
-                    navigate('/');
+                    navigate('/applicationStatus');
                 }
             })
         })();

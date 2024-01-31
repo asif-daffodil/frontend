@@ -14,6 +14,7 @@ import Blog from "./Pages/Blog/Blog";
 import Application from "./Pages/Aplication/Application";
 import StartApplication from "./Pages/Aplication/StartApplication";
 import RequireAuth from "./Components/RequireAuth";
+import ApplicationStatus from "./Pages/Aplication/ApplicationStatus";
 
 
 const router = createBrowserRouter([
@@ -33,7 +34,8 @@ const router = createBrowserRouter([
             { path: "/login", element: <Login /> },
             { path: "/signup", element: <Signup /> },
             { path: "/application", element: <RequireAuth><Application /></RequireAuth> },
-            { path: "/startApplication", element: <RequireAuth><StartApplication /></RequireAuth> }
+            { path: "/startApplication", element: <RequireAuth><StartApplication /></RequireAuth> },
+            { path: "/applicationStatus", element: <ApplicationStatus />}
         ],
     },
 ]);

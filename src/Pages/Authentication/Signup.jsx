@@ -3,7 +3,7 @@ import bannerImg from '../../images/slides/homeSlide1.jpg';
 import { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../hooks/auth';
-import { Swal } from 'sweetalert2/dist/sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 const bannerBg = {
     backgroundImage: `url(${bannerImg})`,
@@ -283,7 +283,7 @@ const Signup = () => {
 
 
         if (crrFirstName && crrLastName && crrEmail && crrPhone && crrParentPhone && crrMonth && crrDay && crrYear && crrPassword) {
-            const response = await axios.post('http://localhost:8000/api/register', {
+            await axios.post('http://localhost:8000/api/register', {
                 firstName,
                 lastName,
                 email,
@@ -293,20 +293,27 @@ const Signup = () => {
                 day,
                 year,
                 password
+            }).then(response => {
+                if (response.data.message === "User successfully registered") {
+                    Swal.fire({
+                        text: response.data.message,
+                        icon: 'success',
+                        timer: 1500,
+                        position: "top-end",
+                        showConfirmButton: false,
+                    });
+                    navigate("/login");
+                }else{
+                    Swal.fire({
+                        text: response.data.message,
+                        icon: 'error',
+                        timer: 1500,
+                        position: "top-end",
+                        showConfirmButton: false,
+                    });
+                }
+                
             });
-
-            // Handle successful response
-            if (response.data.message == "User successfully registered") {
-                Swal.fire({
-                    title: 'Success',
-                    text: 'You have been registered',
-                    icon: 'success',
-                    timer: 1500,
-                    position: "top-end",
-                    showConfirmButton: false,
-                });
-                navigate("/login");
-            }
         }
     }
 
