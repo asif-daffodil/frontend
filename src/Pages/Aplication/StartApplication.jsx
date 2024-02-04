@@ -15,7 +15,6 @@ const StartApplication = () => {
     const { isLoading, data } = useQuery('repoData', () =>
         axios.get('http://localhost:8000/api/checkpreaplication', { withCredentials: true }).then(response => response.data)
     )
-    console.log(data);
     useEffect(() => {
         if (data.message === 'You already have an application') {
             navigate('/applicationStatus');

@@ -28,24 +28,33 @@ const Signup = () => {
     const onSubmit = data => {
         axios.post('http://localhost:8000/api/login', data, { withCredentials: true })
             .then(response => {
-                auth.login(response.data.user);
-                Swal.fire({
-                    text: 'Login Successful!',
-                    icon: 'success',
-                    timer: 1500,
-                    position: "top-end",
-                    showConfirmButton: false,
-                }).then(() => {
-                    setTimeout(() => {
-                        navigate('/');
-                    }, 2000);
-                })
-            })
-            .catch(error => {
-                console.log(error);
-            })
+                if (response.data.message === 'User successfully logged in'){
+                    auth.login(response.data.user);
+                    Swal.fire({
+                        text: 'Login Successful!',
+                        icon: 'success',
+                        timer: 1500,
+                        position: "top-end",
+                        showConfirmButton: false,
+                    }).then(() => {
+                        setTimeout(() => {
+                            navigate('/');
+                        }, 2000);
+                    })
+                }
+            }).catch(error => {
+                if (error.response && error.response.status === 401) {
+                    Swal.fire({
+                        text: 'Invalid Login Information!',
+                        icon: 'error',
+                        timer: 1500,
+                        position: "top-end",
+                        showConfirmButton: false,
+                    })
+                }
+            });
+        }
 
-    };
 
     return (
         <div className='container-fluid'>
@@ -103,6 +112,6 @@ const Signup = () => {
             </div>
         </div>
     );
-};
+}
 
 export default Signup;

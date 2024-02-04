@@ -19,7 +19,7 @@ const MainLayouts = () => {
         <>
             <TopHeader />
             <MainNavbar />
-            {isLoading ? <div className="col-md-12 text-center">Loading...</div> : <Outlet />}
+            <Outlet />
             <Footer />
         </>
     );
