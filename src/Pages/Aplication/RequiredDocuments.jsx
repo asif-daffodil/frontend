@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CommonBanner from "../../Components/CommonBanner/CommonBanner";
 import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
+import AppBreadcrumb from "../../Components/Application/AppBreadcrumb/AppBreadcrumb";
 
 const RequiredDocuments = () => {
   return (
@@ -11,6 +12,9 @@ const RequiredDocuments = () => {
       />
       <div className="container">
         <div className="row">
+          <div className="col-md-12">
+            <AppBreadcrumb />
+          </div>
           <div className="col-md-12 display-6 py-3">
             Required <span className="text-primary">Documents</span>
           </div>
@@ -18,7 +22,12 @@ const RequiredDocuments = () => {
             Upload Your Required Documents
           </div>
         </div>
-        <form action="" method="post" encType="multipart/form-data" className="mb-5">
+        <form
+          action=""
+          method="post"
+          encType="multipart/form-data"
+          className="mb-5"
+        >
           <div className="row py-5">
             {/* ssc Certificate */}
             <div className="col-md-6 py-5">
@@ -125,13 +134,13 @@ const RequiredDocuments = () => {
               </label>
             </div>
           </div>
-            <div className="row">
-                <div className="col-md-12 h5 py-2 text-center">
-                <button type="submit" className="btn btn-outline-primary btn-lg">
-                    Continue
-                </button>
-                </div>
+          <div className="row">
+            <div className="col-md-12 h5 py-2 text-center">
+              <button type="submit" className="btn btn-outline-primary btn-lg">
+                Continue
+              </button>
             </div>
+          </div>
         </form>
       </div>
     </>

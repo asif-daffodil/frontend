@@ -38,8 +38,8 @@ const router = createBrowserRouter([
             { path: "/application", element: <RequireAuth><Application /></RequireAuth> },
             { path: "/startApplication", element: <RequireAuth><StartApplication /></RequireAuth> },
             { path: "/applicationStatus", element: <RequireAuth><ApplicationStatus /></RequireAuth> },
-            { path: "newApplication", element: <RequireAuth><NewApplication /></RequireAuth>},
-            { path: "requiredDocuments", element: <RequireAuth><RequiredDocuments /></RequireAuth>}
+            { path: "/newApplication", element: <RequireAuth><NewApplication /></RequireAuth>},
+            { path: "/requiredDocuments", element: <RequireAuth><RequiredDocuments /></RequireAuth>}
         ],
     },
 ]);
