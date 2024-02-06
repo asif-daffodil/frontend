@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import CommonBanner from "../../Components/CommonBanner/CommonBanner";
 import { useAuth } from "../../hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AppBreadcrumb from "../../Components/Application/AppBreadcrumb/AppBreadcrumb";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 const NewApplication = () => {
   const auth = useAuth();
@@ -32,8 +34,26 @@ const NewApplication = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
 
     const onSubmit = async (data) => {
-        console.log(data);
-    }
+        (async () => {
+            await axios.post("http://localhost:8000/api/new-application", data, {withCredentials: true}).then((res) => {
+              if (res.status === 201) {
+                Swal.fire({
+                  text: res.data.message,
+                  icon: "success",
+                });
+                navigate("/requiredDocuments");
+              }
+            }).catch((err) => {
+              console.log(err);
+              if (err.response.status === 409) {
+                Swal.fire({
+                  text: err.response.data.message,
+                  icon: "error",
+                });
+              }
+            });
+          })();
+        };
   return (
     <>
       <CommonBanner
@@ -180,11 +200,11 @@ const NewApplication = () => {
                 <label htmlFor="citizenYes" className="form-check">
                   <input
                     type="radio"
-                    name="citizen"
+                    name="russain_citizen"
                     id="citizenYes"
                     value="Yes"
                     className="form-check-input"
-                    {...register("citizen")}
+                    {...register("russain_citizen")}
                     onChange={(e) => {
                         if(e.target.checked){
                             setCheckCitizen("d-block");
@@ -200,11 +220,11 @@ const NewApplication = () => {
                 <label htmlFor="citizenNo" className="form-check">
                   <input
                     type="radio"
-                    name="citizen"
+                    name="russain_citizen"
                     id="citizenNo"
                     value="No"
                     className="form-check-input"
-                    {...register("citizen")}
+                    {...register("russain_citizen")}
                     onChange={(e) => {
                         if(e.target.checked){
                             setCheckCitizen("d-none");
@@ -230,11 +250,11 @@ const NewApplication = () => {
                 <label htmlFor="residentYes" className="form-check">
                   <input
                     type="radio"
-                    name="resident"
+                    name="permanent_resident"
                     id="residentYes"
                     value="Yes"
                     className="form-check-input"
-                    {...register("resident")}
+                    {...register("permanent_resident")}
                     onChange={(e) => {
                         if(e.target.checked){
                             setCheckResident("d-block");
@@ -247,11 +267,11 @@ const NewApplication = () => {
                 <label htmlFor="residentNo" className="form-check">
                   <input
                     type="radio"
-                    name="resident"
+                    name="permanent_resident"
                     id="residentNo"
                     value="No"
                     className="form-check-input"
-                    {...register("resident")}
+                    {...register("permanent_resident")}
                     onChange={(e) => {
                         if(e.target.checked){
                             setCheckResident("d-none");
@@ -267,19 +287,15 @@ const NewApplication = () => {
                 completing a Domestic application. Click on the Home link over
                 on the left hand side and start a domestic application.
               </p>
-              <p className={`small text-success ${checkDegree}`}>
+              <div className={`${checkDegree}`}>
+              <p className={`small text-success`}>
                 Based on your answers above you are considered.
               </p>
               <button type="submit" className="btn btn-lg btn-outline-primary ">
                 Continue
               </button>
+              </div>
             </form>
-            <Link
-              to="/requiredDocuments"
-              className="btn btn-sm btn-outline-primary ms-3"
-            >
-              Required Documents
-            </Link>
           </div>
         </div>
       </div>
