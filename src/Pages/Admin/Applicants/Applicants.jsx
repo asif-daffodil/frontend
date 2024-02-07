@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
-const PreApplicants = () => {
-  const [pageNo, setPageNo] = useState(1);
+const Applicants = () => {
+    const [pageNo, setPageNo] = useState(1);
   const [pageLimit, setPageLimit] = useState(5);
   const { data, isLoading, refetch } = useQuery("preApplicants", () =>
     axios
       .get(
-        `http://localhost:8000/api/get-pre-applicant/${pageNo}/${pageLimit}`,
+        `http://localhost:8000/api/get-applicant/${pageNo}/${pageLimit}`,
         { withCredentials: true }
       )
       .then((response) => response.data)
@@ -28,7 +28,7 @@ const PreApplicants = () => {
   }, [pageNo, data]);
 
     const approveHandle = async (id) => {
-        await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Approved`, {
+        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
             withCredentials: true
         }).then(res => {
             if(res.status === 200){
@@ -45,7 +45,7 @@ const PreApplicants = () => {
     };
 
     const cancelHandle = async (id) => {
-        await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Canceled`, {
+        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
             withCredentials: true
         }).then(res => {
             if(res.status === 200){
@@ -75,25 +75,35 @@ const PreApplicants = () => {
                 <tr>
                   <th>S.N.</th>
                   <th>Name</th>
+                  <th>Application Type</th>
+                  <th>High School</th>
                   <th>Russian Citizen</th>
                   <th>Permanent Resident</th>
-                  <th>Campus Location</th>
+                  <th>SSC</th>
+                  <th>HSC</th>
+                  <th>Passport</th>
+                  <th>Photo</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {data.data.map((preApplicant, index) => (
-                  <tr key={preApplicant.id}>
+                {data.data.map((applicant, index) => (
+                  <tr key={applicant.id}>
                     <td>{index + 1}</td>
                     <td>
-                      {preApplicant.user.firstName} {preApplicant.user.lastName}
+                      {applicant.user.firstName} {applicant.user.lastName}
                     </td>
-                    <td>{preApplicant.russain_citizen}</td>
-                    <td>{preApplicant.permanent_resident}</td>
-                    <td>{preApplicant.location}</td>
+                    <td>{applicant.applicationType}</td>
+                    <td>{applicant.highSchool}</td>
+                    <td>{applicant.russain_citizen}</td>
+                    <td>{applicant.permanent_resident}</td>
+                    <td>SSC</td>
+                    <td>HSC</td>
+                    <td>Passport</td>
+                    <td>Photo</td>
                     <td>
-                      <button className="btn btn-primary btn-sm me-2" onClick={() => approveHandle(preApplicant.id)}>Approve</button>
-                      <button className="btn btn-danger btn-sm" onClick={() => cancelHandle(preApplicant.id)}>Cancel</button>
+                      <button className="btn btn-primary btn-sm me-2" onClick={() => approveHandle(applicant.id)}>Approve</button>
+                      <button className="btn btn-danger btn-sm" onClick={() => cancelHandle(applicant.id)}>Cancel</button>
                     </td>
                   </tr>
                 ))}
@@ -140,4 +150,4 @@ const PreApplicants = () => {
   );
 };
 
-export default PreApplicants;
+export default Applicants;

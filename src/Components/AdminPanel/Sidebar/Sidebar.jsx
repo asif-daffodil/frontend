@@ -10,6 +10,9 @@ const Sidebar = () => {
                 <NavLink to="/pre-applicants" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Pre-Applicants</NavLink>
             </li>
             <li>
+                <NavLink to="/waiting-applicant" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Waiting Applicants</NavLink>
+            </li>
+            <li>
                 <NavLink to="/applicants" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Applicants</NavLink>
             </li>
             <li>

@@ -21,6 +21,9 @@ import AdminLayouts from "./Layout/AdminLayouts";
 import Dashboard from "./Components/AdminPanel/Dashboard/Dashboard";
 import Payments from "./Pages/Aplication/Payments";
 import PreApplicants from "./Pages/Admin/PreApplicants/PreApplicants";
+import WaitingApplicant from "./Pages/Admin/WaitingApplicant/WaitingApplicant";
+import Applicants from "./Pages/Admin/Applicants/Applicants";
+import ApprovedApplicants from "./Pages/Admin/ApprovedApplicants/ApprovedApplicants";
 
 
 const router = createBrowserRouter([
@@ -52,7 +55,10 @@ const router = createBrowserRouter([
         element: <AdminLayouts />,
         children: [
             { path: "/admin", element: <Dashboard /> },
-            { path: "/pre-applicants", element: <PreApplicants />}
+            { path: "/pre-applicants", element: <PreApplicants />},
+            { path: "/waiting-applicant", element: <WaitingApplicant /> },
+            { path: "/applicants", element: <Applicants />},
+            { path: "/Approved-applicants", element:<ApprovedApplicants />},
         ],
     }
 ]);
