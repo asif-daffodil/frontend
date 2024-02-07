@@ -20,6 +20,7 @@ import RequiredDocuments from "./Pages/Aplication/RequiredDocuments";
 import AdminLayouts from "./Layout/AdminLayouts";
 import Dashboard from "./Components/AdminPanel/Dashboard/Dashboard";
 import Payments from "./Pages/Aplication/Payments";
+import PreApplicants from "./Pages/Admin/PreApplicants/PreApplicants";
 
 
 const router = createBrowserRouter([
@@ -47,10 +48,11 @@ const router = createBrowserRouter([
         ],
     },
     {
-        path: "/admin",
+        path: "/",
         element: <AdminLayouts />,
         children: [
             { path: "/admin", element: <Dashboard /> },
+            { path: "/pre-applicants", element: <PreApplicants />}
         ],
     }
 ]);

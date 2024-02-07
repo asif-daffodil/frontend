@@ -81,9 +81,9 @@ const RequiredDocuments = () => {
                 <p className="small fw-bolder mb-0">
                   drag and drop your file <br /> Or
                 </p>
-                <button className="btn btn-primary btn-sm px-4 rounded-pill">
+                <span className="btn btn-primary btn-sm px-4 rounded-pill">
                   Browse File
-                </button>
+                </span>
                 <p className="text-secondary small">
                   Maximum upload file size: 2 MB
                 </p>
@@ -116,9 +116,9 @@ const RequiredDocuments = () => {
                 <p className="small fw-bolder mb-0">
                   drag and drop your file <br /> Or
                 </p>
-                <button className="btn btn-primary btn-sm px-4 rounded-pill">
+                <span className="btn btn-primary btn-sm px-4 rounded-pill">
                   Browse File
-                </button>
+                </span>
                 <p className="text-secondary small">
                   Maximum upload file size: 2 MB
                 </p>
@@ -151,9 +151,9 @@ const RequiredDocuments = () => {
                 <p className="small fw-bolder mb-0">
                   drag and drop your file <br /> Or
                 </p>
-                <button className="btn btn-primary btn-sm px-4 rounded-pill">
+                <span className="btn btn-primary btn-sm px-4 rounded-pill">
                   Browse File
-                </button>
+                </span>
                 <p className="text-secondary small">
                   Maximum upload file size: 2 MB
                 </p>
@@ -192,9 +192,9 @@ const RequiredDocuments = () => {
                 <p className="small fw-bolder mb-0">
                   drag and drop your file <br /> Or
                 </p>
-                <button className="btn btn-primary btn-sm px-4 rounded-pill">
+                <span className="btn btn-primary btn-sm px-4 rounded-pill">
                   Browse File
-                </button>
+                </span>
                 <p className="text-secondary small">
                   Maximum upload file size: 2 MB
                 </p>
