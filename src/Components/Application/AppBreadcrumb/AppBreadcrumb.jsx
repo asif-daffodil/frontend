@@ -9,6 +9,7 @@ const AppBreadcrumb = () => {
       <Link to="/applicationStatus" className="breadcrumb-item ">Application Status</Link>
       <Link to="/newApplication" className="breadcrumb-item ">New Application</Link>
       <Link to="/requiredDocuments" className="breadcrumb-item ">Required Documents</Link>
+      <Link to="/payments" className="breadcrumb-item ">Payments</Link>
     </Breadcrumb>
   );
 };

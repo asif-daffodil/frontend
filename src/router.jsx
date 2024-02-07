@@ -17,6 +17,9 @@ import RequireAuth from "./Components/RequireAuth";
 import ApplicationStatus from "./Pages/Aplication/ApplicationStatus";
 import NewApplication from "./Pages/Aplication/NewApplication";
 import RequiredDocuments from "./Pages/Aplication/RequiredDocuments";
+import AdminLayouts from "./Layout/AdminLayouts";
+import Dashboard from "./Components/AdminPanel/Dashboard/Dashboard";
+import Payments from "./Pages/Aplication/Payments";
 
 
 const router = createBrowserRouter([
@@ -38,10 +41,18 @@ const router = createBrowserRouter([
             { path: "/application", element: <RequireAuth><Application /></RequireAuth> },
             { path: "/startApplication", element: <RequireAuth><StartApplication /></RequireAuth> },
             { path: "/applicationStatus", element: <RequireAuth><ApplicationStatus /></RequireAuth> },
-            { path: "/newApplication", element: <RequireAuth><NewApplication /></RequireAuth>},
-            { path: "/requiredDocuments", element: <RequireAuth><RequiredDocuments /></RequireAuth>}
+            { path: "/newApplication", element: <RequireAuth><NewApplication /></RequireAuth> },
+            { path: "/requiredDocuments", element: <RequireAuth><RequiredDocuments /></RequireAuth> },
+            { path: "/payments", element: <RequireAuth><Payments /></RequireAuth> }
         ],
     },
+    {
+        path: "/admin",
+        element: <AdminLayouts />,
+        children: [
+            { path: "/admin", element: <Dashboard /> },
+        ],
+    }
 ]);
 
 export default router;

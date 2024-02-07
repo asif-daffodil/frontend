@@ -2,8 +2,44 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CommonBanner from "../../Components/CommonBanner/CommonBanner";
 import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
 import AppBreadcrumb from "../../Components/Application/AppBreadcrumb/AppBreadcrumb";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import { useNavigate } from "react-router-dom";
 
 const RequiredDocuments = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
+  const navigate = useNavigate();
+  const onSubmit = (data) => {
+    (async () => {
+      const formData = new FormData();
+      formData.append('ssc', data.ssc[0]);
+      formData.append('hsc', data.hsc[0]);
+      formData.append('passport', data.passport[0]);
+      formData.append('photo', data.photo[0]);
+      await axios.post('http://localhost:8000/api/upload', formData, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(response => {
+        if (response.data.message === 'Documents successfully uploaded') {
+          Swal.fire({
+            text: 'Documents successfully uploaded',
+            icon: 'success',
+            timer: 1500,
+            position: "top-end",
+            showConfirmButton: false,
+          }).then(() => {
+            setTimeout(() => {
+              navigate('/applicationStatus');
+            }, 2000);
+          })
+        }
+      })
+    })();
+  }
+
   return (
     <>
       <CommonBanner
@@ -27,6 +63,7 @@ const RequiredDocuments = () => {
           method="post"
           encType="multipart/form-data"
           className="mb-5"
+          onSubmit={handleSubmit(onSubmit)}
         >
           <div className="row py-5">
             {/* ssc Certificate */}
@@ -50,7 +87,17 @@ const RequiredDocuments = () => {
                 <p className="text-secondary small">
                   Maximum upload file size: 2 MB
                 </p>
-                <input type="file" name="ssc" id="ssc" className="d-none" />
+                <input type="file" name="ssc" id="ssc" className="d-none" {...register('ssc', {
+                  required: {
+                    value: true,
+                    message: "SSC is required"
+                  },
+                  pattern: {
+                    value: /\.(jpe?g|png|gif|bmp)$/i,
+                    message: "Invalid SSC format"
+                  }
+                })} />
+                {errors.ssc && <p className='text-danger small'> {errors.ssc.message} </p>}
               </label>
             </div>
 
@@ -75,7 +122,17 @@ const RequiredDocuments = () => {
                 <p className="text-secondary small">
                   Maximum upload file size: 2 MB
                 </p>
-                <input type="file" name="hsc" id="hsc" className="d-none" />
+                <input type="file" name="hsc" id="hsc" className="d-none" {...register('hsc', {
+                  required: {
+                    value: true,
+                    message: "HSC is required"
+                  },
+                  pattern: {
+                    value: /\.(jpe?g|png|gif|bmp)$/i,
+                    message: "Invalid HSC format"
+                  }
+                })} />
+                {errors.hsc && <p className='text-danger small'> {errors.hsc.message} </p>}
               </label>
             </div>
 
@@ -105,7 +162,18 @@ const RequiredDocuments = () => {
                   name="passport"
                   id="passport"
                   className="d-none"
+                  {...register('passport', {
+                    required: {
+                      value: true,
+                      message: "Passport is required"
+                    },
+                    pattern: {
+                      value: /\.(jpe?g|png|gif|bmp)$/i,
+                      message: "Invalid passport format"
+                    }
+                  })}
                 />
+                {errors.passport && <p className='text-danger small'> {errors.passport.message} </p>}
               </label>
             </div>
 
@@ -130,7 +198,17 @@ const RequiredDocuments = () => {
                 <p className="text-secondary small">
                   Maximum upload file size: 2 MB
                 </p>
-                <input type="file" name="photo" id="photo" className="d-none" />
+                <input type="file" name="photo" id="photo" className="d-none" {...register('photo', {
+                  required: {
+                    value: true,
+                    message: "Photo is required"
+                  },
+                  pattern: {
+                    value: /\.(jpe?g|png|gif|bmp)$/i,
+                    message: "Invalid photo format"
+                  }
+                })} />
+                {errors.photo && <p className='text-danger small'> {errors.photo.message} </p>}
               </label>
             </div>
           </div>
