@@ -97,7 +97,9 @@ const Applicants = () => {
                     <td>{applicant.highSchool}</td>
                     <td>{applicant.russain_citizen}</td>
                     <td>{applicant.permanent_resident}</td>
-                    <td>SSC</td>
+                    <td>
+                        <img src={applicant.ssc} alt="" className="img-fluid" />
+                    </td>
                     <td>HSC</td>
                     <td>Passport</td>
                     <td>Photo</td>
