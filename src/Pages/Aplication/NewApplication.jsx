@@ -54,11 +54,11 @@ const NewApplication = () => {
     return <div>Loading...</div>;
   }
   if (!data.data) {
-    navigate("/applicationStatus");
+    navigate("/application");
   } else if (!data?.data[0]?.application_status) {
-    navigate("/applicationStatus");
+    navigate("/application");
   } else if (data?.data[0]?.application_status === "Pending") {
-    navigate("/applicationStatus");
+    navigate("/application");
   }
 
 

@@ -18,12 +18,12 @@ const Payments = () => {
     useEffect(() => {
         refetch();
         if (!data?.data.length == 0) {
-            navigate("/applicationStatus");
+            navigate("/application");
         }
     }, [data]);
 
     if (!data?.data.length == 0) {
-        navigate("/applicationStatus");
+        navigate("/application");
     }
 
     const {
@@ -53,7 +53,7 @@ const Payments = () => {
                             showConfirmButton: false,
                         }).then(() => {
                             setTimeout(() => {
-                                navigate("/applicationStatus");
+                                navigate("/application");
                             }, 2000);
                         });
                     }

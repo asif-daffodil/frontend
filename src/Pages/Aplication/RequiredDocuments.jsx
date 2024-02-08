@@ -53,11 +53,11 @@ const RequiredDocuments = () => {
 
 
   if (!data.applicationType) {
-    navigate("/applicationStatus");
+    navigate("/application");
   }
 
   if (data.ssc) {
-    navigate("/applicationStatus");
+    navigate("/application");
   }
 
   return (
