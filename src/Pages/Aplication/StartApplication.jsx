@@ -13,7 +13,7 @@ const StartApplication = () => {
     const auth = useAuth();
     const navigate = useNavigate();
 
-    const { isLoading, data } = useQuery("repoData", () =>
+    const { isLoading, data, refetch } = useQuery("repoData", () =>
         axios
             .get("http://localhost:8000/api/checkpreaplication", {
                 withCredentials: true,
@@ -25,6 +25,7 @@ const StartApplication = () => {
             if (!auth.user[0]) {
                 navigate("/login");
             }
+            refetch();
         },
         [auth.user[0]],
         data
@@ -69,10 +70,6 @@ const StartApplication = () => {
 
 
     if (isLoading) return <div>Loading...</div>;
-    if (!data) {
-        refetch();
-        return <div>Loading...</div>;
-    }
 
     return (
         <>

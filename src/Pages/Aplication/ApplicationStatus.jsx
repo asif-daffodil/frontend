@@ -3,6 +3,7 @@ import CommonBanner from "../../Components/CommonBanner/CommonBanner";
 import AppBreadcrumb from "../../Components/Application/AppBreadcrumb/AppBreadcrumb";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { useEffect } from "react";
 
 const ApplicationStatus = () => {
     const navigate = useNavigate();
@@ -15,11 +16,19 @@ const ApplicationStatus = () => {
         })
     );
 
-    if (isLoading) return <div>Loading...</div>;
-    if (!data) {
+    console.log(data);
+
+    useEffect(() => {
         refetch();
-        return <div>Loading...</div>;
+    }, [data]);
+
+    if(data?.data?.length == 0) {
+        navigate("/application");
     }
+
+
+    if (isLoading) return <div>Loading...</div>;
+    if(!data) return <div>Loading...</div>;
     return (
         <>
             <CommonBanner
@@ -57,10 +66,9 @@ const ApplicationStatus = () => {
                                         </td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
                                     </tr>
                                 ) : (
-                                    data.data.map((item, index) => (
+                                    data?.data?.map((item, index) => (
                                         <tr key={index}>
                                             <td colSpan="6" className="text-danger">
                                                 {item.user.firstName} {item.user.lastName}

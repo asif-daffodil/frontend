@@ -25,7 +25,7 @@ const NewApplication = () => {
     axios.get("http://localhost:8000/api/get_individual_application", {
       withCredentials: true,
     }).then((res) => {
-      if (res.data.applicationType) {
+      if (!res.data) {
         navigate("/requiredDocuments");
       }
     });
@@ -53,7 +53,11 @@ const NewApplication = () => {
     refetch();
     return <div>Loading...</div>;
   }
-  if (data.data.length === 0 || data.data[0].application_status === "Pending") {
+  if (!data.data) {
+    navigate("/applicationStatus");
+  }else if (!data?.data[0]?.application_status){
+    navigate("/applicationStatus");
+  }else if (data?.data[0]?.application_status === "Pending") {
     navigate("/applicationStatus");
   }
 

@@ -4,9 +4,28 @@ import CommonBanner from "../../Components/CommonBanner/CommonBanner";
 import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
+import { useEffect } from "react";
 
 const Payments = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { data, isLoading, refetch } = useQuery("payData", () =>
+    axios.get("http://localhost:8000/api/get_individual_application", {
+      withCredentials: true,
+    })
+  );
+
+  useEffect(() => {
+    refetch();
+    if (!data?.data.length == 0) {
+      navigate("/applicationStatus");
+    }
+  }, [data]);
+
+  if (!data?.data.length == 0) {
+    navigate("/applicationStatus");
+  }
+
   const {
     register,
     handleSubmit,
@@ -33,14 +52,14 @@ const Payments = () => {
               position: "top-end",
               showConfirmButton: false,
             }).then(() => {
-                setTimeout(() => {
-                    navigate('/applicationStatus');
-                }, 2000);
-            })
-
+              setTimeout(() => {
+                navigate("/applicationStatus");
+              }, 2000);
+            });
           }
-        }).catch((err) => {
-            if(err.response.status === 422){
+        })
+        .catch((err) => {
+          if (err.response.status === 422) {
             Swal.fire({
               text: err.response.data.message,
               icon: "error",
@@ -48,10 +67,14 @@ const Payments = () => {
               position: "top-end",
               showConfirmButton: false,
             });
-            }
+          }
         });
     })();
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
