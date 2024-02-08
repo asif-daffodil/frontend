@@ -6,15 +6,29 @@ import AppBreadcrumb from "../../Components/Application/AppBreadcrumb/AppBreadcr
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
+import { useQuery } from "react-query";
 
 const NewApplication = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
+  const { isLoading, data, refetch } = useQuery("repoData", () =>
+    axios.get("http://localhost:8000/api/checkpreaplication", {
+      withCredentials: true,
+    })
+  );
+
   useEffect(() => {
     if (!auth.user[0]) {
       navigate("/login");
     }
+    axios.get("http://localhost:8000/api/get_individual_application", {
+      withCredentials: true,
+    }).then((res) => {
+      if (res.data.applicationType) {
+        navigate("/requiredDocuments");
+      }
+    });
   }, [auth.user[0]]);
 
   const [ugCheck, setUgCheck] = useState("d-none");
@@ -25,35 +39,46 @@ const NewApplication = () => {
   const [checkDegree, setCheckDegree] = useState("d-none");
 
   const highSchoolYes = document.getElementById("highSchoolYes");
-    const highSchoolNo = document.getElementById("highSchoolNo");
-    const citizenYes = document.getElementById("citizenYes");
-    const citizenNo = document.getElementById("citizenNo");
-    const residentYes = document.getElementById("residentYes");
-    const residentNo = document.getElementById("residentNo");
+  const highSchoolNo = document.getElementById("highSchoolNo");
+  const citizenYes = document.getElementById("citizenYes");
+  const citizenNo = document.getElementById("citizenNo");
+  const residentYes = document.getElementById("residentYes");
+  const residentNo = document.getElementById("residentNo");
+
 
   const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
 
-    const onSubmit = async (data) => {
-        (async () => {
-            await axios.post("http://localhost:8000/api/new-application", data, {withCredentials: true}).then((res) => {
-              if (res.status === 201) {
-                Swal.fire({
-                  text: res.data.message,
-                  icon: "success",
-                });
-                navigate("/requiredDocuments");
-              }
-            }).catch((err) => {
-              console.log(err);
-              if (err.response.status === 409) {
-                Swal.fire({
-                  text: err.response.data.message,
-                  icon: "error",
-                });
-              }
-            });
-          })();
-        };
+  if (isLoading) return <div>Loading...</div>;
+  if (!data) {
+    refetch();
+    return <div>Loading...</div>;
+  }
+  if (data.data.length === 0 || data.data[0].application_status === "Pending") {
+    navigate("/applicationStatus");
+  }
+
+
+  const onSubmit = async (data) => {
+    (async () => {
+      await axios.post("http://localhost:8000/api/new-application", data, { withCredentials: true }).then((res) => {
+        if (res.status === 201) {
+          Swal.fire({
+            text: res.data.message,
+            icon: "success",
+          });
+          navigate("/requiredDocuments");
+        }
+      }).catch((err) => {
+        console.log(err);
+        if (err.response.status === 409) {
+          Swal.fire({
+            text: err.response.data.message,
+            icon: "error",
+          });
+        }
+      });
+    })();
+  };
   return (
     <>
       <CommonBanner
@@ -86,20 +111,20 @@ const NewApplication = () => {
                     className="form-check-input"
                     {...register("applicationType")}
                     onChange={(e) => {
-                        if(e.target.checked){
-                            setUgCheck("d-block");
-                            setCheckHighSchool("d-none");
-                            setCheckCitizen("d-none");
-                            setShowResident("d-none");
-                            setCheckResident("d-none");
-                            setCheckDegree("d-none");
-                        }
-                        highSchoolYes.checked = false;
-                        highSchoolNo.checked = false;
-                        citizenYes.checked = false;
-                        citizenNo.checked = false;
-                        residentYes.checked = false;
-                        residentNo.checked = false;
+                      if (e.target.checked) {
+                        setUgCheck("d-block");
+                        setCheckHighSchool("d-none");
+                        setCheckCitizen("d-none");
+                        setShowResident("d-none");
+                        setCheckResident("d-none");
+                        setCheckDegree("d-none");
+                      }
+                      highSchoolYes.checked = false;
+                      highSchoolNo.checked = false;
+                      citizenYes.checked = false;
+                      citizenNo.checked = false;
+                      residentYes.checked = false;
+                      residentNo.checked = false;
                     }}
                   />
                   <span className="ms-2 form-check-label">
@@ -115,20 +140,20 @@ const NewApplication = () => {
                     className="form-check-input"
                     {...register("applicationType")}
                     onChange={(e) => {
-                        if(e.target.checked){
-                            setUgCheck("d-none");
-                            setCheckHighSchool("d-block");
-                            setCheckCitizen("d-none");
-                            setShowResident("d-none");
-                            setCheckResident("d-none");
-                            setCheckDegree("d-none");
-                        }
-                        highSchoolYes.checked = false;
-                        highSchoolNo.checked = false;
-                        citizenYes.checked = false;
-                        citizenNo.checked = false;
-                        residentYes.checked = false;
-                        residentNo.checked = false;
+                      if (e.target.checked) {
+                        setUgCheck("d-none");
+                        setCheckHighSchool("d-block");
+                        setCheckCitizen("d-none");
+                        setShowResident("d-none");
+                        setCheckResident("d-none");
+                        setCheckDegree("d-none");
+                      }
+                      highSchoolYes.checked = false;
+                      highSchoolNo.checked = false;
+                      citizenYes.checked = false;
+                      citizenNo.checked = false;
+                      residentYes.checked = false;
+                      residentNo.checked = false;
                     }}
                   />
                   <span className="ms-2 form-check-label">
@@ -153,17 +178,17 @@ const NewApplication = () => {
                     className="form-check-input"
                     {...register("highSchool")}
                     onChange={(e) => {
-                        if(e.target.checked){
-                            setCheckHighSchool("d-block");
-                            setCheckResident("d-none");
-                            setCheckDegree("d-none");
-                            setCheckCitizen("d-none");
-                            setShowResident("d-none");
-                        }
-                        citizenYes.checked = false;
-                        citizenNo.checked = false;
-                        residentYes.checked = false;
-                        residentNo.checked = false;
+                      if (e.target.checked) {
+                        setCheckHighSchool("d-block");
+                        setCheckResident("d-none");
+                        setCheckDegree("d-none");
+                        setCheckCitizen("d-none");
+                        setShowResident("d-none");
+                      }
+                      citizenYes.checked = false;
+                      citizenNo.checked = false;
+                      residentYes.checked = false;
+                      residentNo.checked = false;
                     }}
                   />
                   <span className="ms-2 form-check-label">Yes</span>
@@ -177,17 +202,17 @@ const NewApplication = () => {
                     className="form-check-input"
                     {...register("highSchool")}
                     onChange={(e) => {
-                        if(e.target.checked){
-                            setCheckHighSchool("d-block");
-                            setCheckResident("d-none");
-                            setShowResident("d-none");
-                            setCheckCitizen("d-none");
-                            setCheckDegree("d-none");
-                        }
-                        citizenYes.checked = false;
-                        citizenNo.checked = false;
-                        residentYes.checked = false;
-                        residentNo.checked = false;
+                      if (e.target.checked) {
+                        setCheckHighSchool("d-block");
+                        setCheckResident("d-none");
+                        setShowResident("d-none");
+                        setCheckCitizen("d-none");
+                        setCheckDegree("d-none");
+                      }
+                      citizenYes.checked = false;
+                      citizenNo.checked = false;
+                      residentYes.checked = false;
+                      residentNo.checked = false;
                     }}
                   />
                   <span className="ms-2 form-check-label">No</span>
@@ -206,13 +231,13 @@ const NewApplication = () => {
                     className="form-check-input"
                     {...register("russain_citizen")}
                     onChange={(e) => {
-                        if(e.target.checked){
-                            setCheckCitizen("d-block");
-                            setShowResident("d-none");
-                            setCheckResident("d-none");
-                        }
-                        residentYes.checked = false;
-                        residentNo.checked = false;
+                      if (e.target.checked) {
+                        setCheckCitizen("d-block");
+                        setShowResident("d-none");
+                        setCheckResident("d-none");
+                      }
+                      residentYes.checked = false;
+                      residentNo.checked = false;
                     }}
                   />
                   <span className="ms-2 form-check-label">Yes</span>
@@ -226,12 +251,12 @@ const NewApplication = () => {
                     className="form-check-input"
                     {...register("russain_citizen")}
                     onChange={(e) => {
-                        if(e.target.checked){
-                            setCheckCitizen("d-none");
-                            setShowResident("d-block");
-                        }
-                        residentYes.checked = false;
-                        residentNo.checked = false;
+                      if (e.target.checked) {
+                        setCheckCitizen("d-none");
+                        setShowResident("d-block");
+                      }
+                      residentYes.checked = false;
+                      residentNo.checked = false;
                     }}
                   />
                   <span className="ms-2 form-check-label">No</span>
@@ -256,10 +281,10 @@ const NewApplication = () => {
                     className="form-check-input"
                     {...register("permanent_resident")}
                     onChange={(e) => {
-                        if(e.target.checked){
-                            setCheckResident("d-block");
-                            setCheckDegree("d-none");
-                        }
+                      if (e.target.checked) {
+                        setCheckResident("d-block");
+                        setCheckDegree("d-none");
+                      }
                     }}
                   />
                   <span className="ms-2 form-check-label">Yes</span>
@@ -273,10 +298,10 @@ const NewApplication = () => {
                     className="form-check-input"
                     {...register("permanent_resident")}
                     onChange={(e) => {
-                        if(e.target.checked){
-                            setCheckResident("d-none");
-                            setCheckDegree("d-block");
-                        }
+                      if (e.target.checked) {
+                        setCheckResident("d-none");
+                        setCheckDegree("d-block");
+                      }
                     }}
                   />
                   <span className="ms-2 form-check-label">No</span>
@@ -288,12 +313,12 @@ const NewApplication = () => {
                 on the left hand side and start a domestic application.
               </p>
               <div className={`${checkDegree}`}>
-              <p className={`small text-success`}>
-                Based on your answers above you are considered.
-              </p>
-              <button type="submit" className="btn btn-lg btn-outline-primary ">
-                Continue
-              </button>
+                <p className={`small text-success`}>
+                  Based on your answers above you are considered.
+                </p>
+                <button type="submit" className="btn btn-lg btn-outline-primary ">
+                  Continue
+                </button>
               </div>
             </form>
           </div>

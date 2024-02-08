@@ -18,6 +18,9 @@ const Sidebar = () => {
             <li>
                 <NavLink to="/approved-applicants" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Approved Applicants</NavLink>
             </li>
+            <li>
+                <NavLink to="/paid-applicants" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Paid Applicants</NavLink>
+            </li>
         </ul>
     );
 };

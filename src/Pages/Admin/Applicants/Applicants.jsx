@@ -1,10 +1,14 @@
+import { faCheck, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 const Applicants = () => {
-    const [pageNo, setPageNo] = useState(1);
+  const [pageNo, setPageNo] = useState(1);
+  const navigate = useNavigate();
   const [pageLimit, setPageLimit] = useState(5);
   const { data, isLoading, refetch } = useQuery("preApplicants", () =>
     axios
@@ -23,43 +27,47 @@ const Applicants = () => {
     setPageNo((prevPageNo) => prevPageNo + 1);
   };
 
+  const handleIndividual = (id) => {
+    navigate(`/applicants/${id}`);
+  }
+
   useEffect(() => {
     refetch();
   }, [pageNo, data]);
 
-    const approveHandle = async (id) => {
-        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
-            withCredentials: true
-        }).then(res => {
-            if(res.status === 200){
-                Swal.fire({
-                    text: res.data.message,
-                    icon: 'success',
-                    timer: 1500,
-                    position: "top-end",
-                    showConfirmButton: false,
-                })
-            }
-            refetch();
+  const approveHandle = async (id) => {
+    await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
+      withCredentials: true
+    }).then(res => {
+      if (res.status === 200) {
+        Swal.fire({
+          text: res.data.message,
+          icon: 'success',
+          timer: 1500,
+          position: "top-end",
+          showConfirmButton: false,
         })
-    };
+      }
+      refetch();
+    })
+  };
 
-    const cancelHandle = async (id) => {
-        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
-            withCredentials: true
-        }).then(res => {
-            if(res.status === 200){
-                Swal.fire({
-                    text: res.data.message,
-                    icon: 'success',
-                    timer: 1500,
-                    position: "top-end",
-                    showConfirmButton: false,
-                })
-            }
-            refetch();
+  const cancelHandle = async (id) => {
+    await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
+      withCredentials: true
+    }).then(res => {
+      if (res.status === 200) {
+        Swal.fire({
+          text: res.data.message,
+          icon: 'success',
+          timer: 1500,
+          position: "top-end",
+          showConfirmButton: false,
         })
-    };
+      }
+      refetch();
+    })
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -77,12 +85,6 @@ const Applicants = () => {
                   <th>Name</th>
                   <th>Application Type</th>
                   <th>High School</th>
-                  <th>Russian Citizen</th>
-                  <th>Permanent Resident</th>
-                  <th>SSC</th>
-                  <th>HSC</th>
-                  <th>Passport</th>
-                  <th>Photo</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -95,17 +97,16 @@ const Applicants = () => {
                     </td>
                     <td>{applicant.applicationType}</td>
                     <td>{applicant.highSchool}</td>
-                    <td>{applicant.russain_citizen}</td>
-                    <td>{applicant.permanent_resident}</td>
                     <td>
-                        <img src={applicant.ssc} alt="" className="img-fluid" />
-                    </td>
-                    <td>HSC</td>
-                    <td>Passport</td>
-                    <td>Photo</td>
-                    <td>
-                      <button className="btn btn-primary btn-sm me-2" onClick={() => approveHandle(applicant.id)}>Approve</button>
-                      <button className="btn btn-danger btn-sm" onClick={() => cancelHandle(applicant.id)}>Cancel</button>
+                      <button className="btn btn-success btn-sm me-2" onClick={() => handleIndividual(applicant.id)}>
+                        <FontAwesomeIcon icon={faEye} />
+                      </button>
+                      <button className="btn btn-primary btn-sm me-2" onClick={() => approveHandle(applicant.id)}>
+                        <FontAwesomeIcon icon={faCheck} />
+                      </button>
+                      <button className="btn btn-danger btn-sm" onClick={() => cancelHandle(applicant.id)}>
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -124,9 +125,8 @@ const Applicants = () => {
               {Array.from({ length: data.last_page }, (_, i) => (
                 <button
                   key={i + 1}
-                  className={`btn btn-primary rounded-0 ${
-                    i + 1 === pageNo ? "active" : ""
-                  }`}
+                  className={`btn btn-primary rounded-0 ${i + 1 === pageNo ? "active" : ""
+                    }`}
                   onClick={() => {
                     setPageNo(i + 1);
                   }}

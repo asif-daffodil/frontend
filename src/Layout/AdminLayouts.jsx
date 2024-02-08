@@ -1,12 +1,24 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/AdminPanel/Sidebar/Sidebar";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 
 const AdminLayouts = () => {
+    const navigate = useNavigate();
     const style = {
         minHeight: "100vh",
         overflowY: "scroll",
     }
+    const { data, isLoading } = useQuery('repoData', () =>
+        axios.get('http://localhost:8000/api/user', { withCredentials: true }).then(response => response.data.user)
+    )
+
+    if (isLoading) return <div>Loading...</div>;
+
+    if (data.role !== "admin") return navigate("/");
+
+    console.log(data);
     return (
         <div className="container-fluid">
             <div className="row">
