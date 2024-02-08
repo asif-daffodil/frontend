@@ -26,9 +26,9 @@ const Signup = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
 
     const onSubmit = data => {
-        axios.post('http://localhost:8000/api/login', data, { withCredentials: true })
+        axios.post('https://api.smubd.org/api/login', data, { withCredentials: true })
             .then(response => {
-                if (response.data.message === 'User successfully logged in'){
+                if (response.data.message === 'User successfully logged in') {
                     auth.login(response.data.user);
                     Swal.fire({
                         text: 'Login Successful!',
@@ -53,7 +53,7 @@ const Signup = () => {
                     })
                 }
             });
-        }
+    }
 
 
     return (

@@ -15,7 +15,7 @@ const StartApplication = () => {
 
     const { isLoading, data, refetch } = useQuery("repoData", () =>
         axios
-            .get("http://localhost:8000/api/checkpreaplication", {
+            .get("https://api.smubd.org/api/checkpreaplication", {
                 withCredentials: true,
             })
             .then((response) => response.data)
@@ -52,7 +52,7 @@ const StartApplication = () => {
     } = useForm({ mode: "onChange" });
     const onSubmit = async (data) => {
         await axios
-            .post("http://localhost:8000/api/updateFirstPart", data, {
+            .post("https://api.smubd.org/api/updateFirstPart", data, {
                 withCredentials: true,
             })
             .then((response) => {

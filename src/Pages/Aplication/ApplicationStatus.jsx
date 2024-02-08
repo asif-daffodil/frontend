@@ -11,7 +11,7 @@ const ApplicationStatus = () => {
         navigate("/newApplication");
     };
     const { isLoading, data, refetch } = useQuery("repoData", () =>
-        axios.get("http://localhost:8000/api/checkpreaplication", {
+        axios.get("https://api.smubd.org/api/checkpreaplication", {
             withCredentials: true,
         })
     );
@@ -22,13 +22,13 @@ const ApplicationStatus = () => {
         refetch();
     }, [data]);
 
-    if(data?.data?.length == 0) {
+    if (data?.data?.length == 0) {
         navigate("/application");
     }
 
 
     if (isLoading) return <div>Loading...</div>;
-    if(!data) return <div>Loading...</div>;
+    if (!data) return <div>Loading...</div>;
     return (
         <>
             <CommonBanner

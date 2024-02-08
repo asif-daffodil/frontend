@@ -12,7 +12,7 @@ const IndividualApplicant = () => {
     const { data, isLoading, refetch } = useQuery("singleApplicant", () =>
         axios
             .get(
-                `http://localhost:8000/api/get-individual-applicant/${id}`,
+                `https://api.smubd.org/api/get-individual-applicant/${id}`,
                 { withCredentials: true }
             )
             .then((response) => response.data)
@@ -22,7 +22,7 @@ const IndividualApplicant = () => {
     }
 
     const approveHandle = async (id) => {
-        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
+        await axios.post(`https://api.smubd.org/api/approve-applicant/${id}/Approved`, {
             withCredentials: true
         }).then(res => {
             if (res.status === 200) {
@@ -39,7 +39,7 @@ const IndividualApplicant = () => {
     };
 
     const cancelHandle = async (id) => {
-        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
+        await axios.post(`https://api.smubd.org/api/approve-applicant/${id}/Canceled`, {
             withCredentials: true
         }).then(res => {
             if (res.status === 200) {
@@ -78,7 +78,7 @@ const IndividualApplicant = () => {
             </div>
             <div className="col-md-4">
                 <h2>Stident Picture</h2>
-                {data.photo && <img src={`http://localhost:8000/storage/${data.photo}`} className=" img-fluid" alt="" />}
+                {data.photo && <img src={`https://api.smubd.org/storage/${data.photo}`} className=" img-fluid" alt="" />}
                 {!data.photo && <p className="text-danger">No photo uploaded</p>}
             </div>
             <div className="col-md-4">
@@ -110,7 +110,7 @@ const IndividualApplicant = () => {
                         <div className="col-md-12">
                             <div className="card">
                                 <h2 className="text-center card-header">Payment Details : {data.transection_details}</h2>
-                                {data.screenshot && <img src={`http://localhost:8000/storage/${data.screenshot}`} className=" img-fluid" alt="" />}
+                                {data.screenshot && <img src={`https://api.smubd.org/storage/${data.screenshot}`} className=" img-fluid" alt="" />}
                                 {!data.screenshot && <p className="text-danger">No image uploaded</p>}
                             </div>
                         </div>
@@ -120,21 +120,21 @@ const IndividualApplicant = () => {
                     <div className="col-md-4">
                         <div className="card">
                             <h2 className="text-center card-header">SSC Certificate </h2>
-                            {data.ssc && <img src={`http://localhost:8000/storage/${data.ssc}`} className=" img-fluid" alt="" />}
+                            {data.ssc && <img src={`https://api.smubd.org/storage/${data.ssc}`} className=" img-fluid" alt="" />}
                             {!data.ssc && <p className="text-danger">No SSC certificate uploaded</p>}
                         </div>
                     </div>
                     <div className="col-md-4">
                         <div className="card">
                             <h2 className="text-center card-header">HSC</h2>
-                            {data.hsc && <img src={`http://localhost:8000/storage/${data.hsc}`} className=" img-fluid" alt="" />}
+                            {data.hsc && <img src={`https://api.smubd.org/storage/${data.hsc}`} className=" img-fluid" alt="" />}
                             {!data.hsc && <p className="text-danger">No HSC certificate uploaded</p>}
                         </div>
                     </div>
                     <div className="col-md-4">
                         <div className="card">
                             <h2 className="text-center card-header">Passport</h2>
-                            {data.passport && <img src={`http://localhost:8000/storage/${data.passport}`} className=" img-fluid" alt="" />}
+                            {data.passport && <img src={`https://api.smubd.org/storage/${data.passport}`} className=" img-fluid" alt="" />}
                             {!data.passport && <p className="text-danger">No passport uploaded</p>}
                         </div>
                     </div>

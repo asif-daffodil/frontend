@@ -283,7 +283,7 @@ const Signup = () => {
 
 
         if (crrFirstName && crrLastName && crrEmail && crrPhone && crrParentPhone && crrMonth && crrDay && crrYear && crrPassword) {
-            await axios.post('http://localhost:8000/api/register', {
+            await axios.post('https://api.smubd.org/api/register', {
                 firstName,
                 lastName,
                 email,
@@ -303,7 +303,7 @@ const Signup = () => {
                         showConfirmButton: false,
                     });
                     navigate("/login");
-                }else{
+                } else {
                     Swal.fire({
                         text: response.data.message,
                         icon: 'error',
@@ -312,7 +312,7 @@ const Signup = () => {
                         showConfirmButton: false,
                     });
                 }
-                
+
             });
         }
     }

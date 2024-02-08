@@ -11,7 +11,7 @@ const WaitingApplicant = () => {
   const { data, isLoading, refetch } = useQuery("preApplicants", () =>
     axios
       .get(
-        `http://localhost:8000/api/waiting-applicant/${pageNo}/${pageLimit}`,
+        `https://api.smubd.org/api/waiting-applicant/${pageNo}/${pageLimit}`,
         { withCredentials: true }
       )
       .then((response) => response.data)
@@ -31,7 +31,7 @@ const WaitingApplicant = () => {
 
 
   const cancelHandle = async (id) => {
-    await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Canceled`, {
+    await axios.post(`https://api.smubd.org/api/approve-pre-applicant/${id}/Canceled`, {
       withCredentials: true
     }).then(res => {
       if (res.status === 200) {
