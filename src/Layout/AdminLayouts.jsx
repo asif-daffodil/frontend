@@ -18,7 +18,6 @@ const AdminLayouts = () => {
 
     if (data.role !== "admin") return navigate("/");
 
-    console.log(data);
     return (
         <div className="container-fluid">
             <div className="row">

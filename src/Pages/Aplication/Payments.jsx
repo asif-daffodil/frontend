@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import AppBreadcrumb from "../../Components/Application/AppBreadcrumb/AppBreadcrumb";
 import CommonBanner from "../../Components/CommonBanner/CommonBanner";
 import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
@@ -40,7 +39,7 @@ const Payments = () => {
                 .post("https://api.smubd.org/api/update-payment", formData, {
                     withCredentials: true,
                     headers: {
-                        "Content-Type": "multipart/form-data",
+                        'Content-Type': 'multipart/form-data'
                     },
                 })
                 .then((response) => {
@@ -83,11 +82,6 @@ const Payments = () => {
                 subtitle="Any question or remarks? Just write us a message!"
             />
             <div className="container">
-                <div className="row">
-                    <div className="col-md-12">
-                        <AppBreadcrumb />
-                    </div>
-                </div>
                 <div className="row">
                     <div className="col-md-6 py-5">
                         <form

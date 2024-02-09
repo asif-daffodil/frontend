@@ -7,7 +7,6 @@ import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import PreApplication from "../../Components/Application/PreApplication/PreApplication";
 import { useQuery } from "react-query";
-import AppBreadcrumb from "../../Components/Application/AppBreadcrumb/AppBreadcrumb";
 
 const StartApplication = () => {
     const auth = useAuth();
@@ -79,9 +78,6 @@ const StartApplication = () => {
             />
             <div className="container py-5">
                 <div className="row">
-                    <div className="col-md-12">
-                        <AppBreadcrumb />
-                    </div>
                     <div className="col-md-12">
                         <h1 className="display-6 ">
                             Start a <span className="text-primary">New Application</span>

@@ -73,7 +73,6 @@ const NewApplication = () => {
           navigate("/requiredDocuments");
         }
       }).catch((err) => {
-        console.log(err);
         if (err.response.status === 409) {
           Swal.fire({
             text: err.response.data.message,
@@ -91,9 +90,6 @@ const NewApplication = () => {
       />
       <div className="container">
         <div className="row">
-          <div className="col-md-12">
-            <AppBreadcrumb />
-          </div>
           <div className="col-md-12 display-6 py-3">
             Applicant <span className="text-primary ">Information</span>
           </div>

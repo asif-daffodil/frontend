@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CommonBanner from "../../Components/CommonBanner/CommonBanner";
 import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
-import AppBreadcrumb from "../../Components/Application/AppBreadcrumb/AppBreadcrumb";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
@@ -68,9 +67,6 @@ const RequiredDocuments = () => {
       />
       <div className="container">
         <div className="row">
-          <div className="col-md-12">
-            <AppBreadcrumb />
-          </div>
           <div className="col-md-12 display-6 py-3">
             Required <span className="text-primary">Documents</span>
           </div>

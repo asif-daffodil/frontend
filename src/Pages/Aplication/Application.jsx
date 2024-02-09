@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../hooks/auth";
 import { useQuery } from "react-query";
-import AppBreadcrumb from "../../Components/Application/AppBreadcrumb/AppBreadcrumb";
 
 const Application = () => {
     const auth = useAuth();
@@ -15,6 +14,8 @@ const Application = () => {
             withCredentials: true,
         })
     );
+
+    const { isLoading: isLoadingUser, data: dataUser, refetch: refetchUser } = useQuery("appData", () => axios.get("https://api.smubd.org/api/get_individual_application", { withCredentials: true }).then(response => response.data));
 
     useEffect(
         () => {
@@ -35,7 +36,9 @@ const Application = () => {
         navigate("/payments");
     };
 
-    console.log(data);
+    const goToDocument = () => {
+        navigate("/requiredDocuments");
+    };
     if (isLoading) return <div>Loading...</div>;
     return (
         <>
@@ -46,7 +49,6 @@ const Application = () => {
             <div className="container">
                 <div className="row py-5">
                     <div className="col-md-12">
-                        <AppBreadcrumb />
                     </div>
                     {isLoading ? (
                         <div className="col-md-12 text-center">Loading...</div>
@@ -102,7 +104,7 @@ const Application = () => {
                                                             {new Date(item.created_at).toLocaleDateString()}
                                                         </td>
                                                         <td>
-                                                            {item.application_status === "Approved" && (
+                                                            {(item.application_status === "Approved" && dataUser?.length === 0) && (
                                                                 <button
                                                                     className="btn btn-sm btn-outline-primary mb-3"
                                                                     onClick={() => goToNewApp()}
@@ -110,13 +112,30 @@ const Application = () => {
                                                                     Application of Salymbekov
                                                                 </button>
                                                             )}
-                                                            {item.application_status === "Applied" && (
+                                                            {(item.application_status === "Applied" && dataUser?.application_status !== "Pending") && (
                                                                 <button
                                                                     className="btn btn-sm btn-outline-primary mb-3"
                                                                     onClick={() => goToPayment()}
                                                                 >
                                                                     Apply For Visa
                                                                 </button>
+                                                            )}
+                                                            {(item.application_status === "Applied" && dataUser?.application_status === "Pending") && (
+                                                                <span>Waiting for Approval</span>
+                                                            )}
+                                                            {(item.application_status === "Paid" && dataUser?.application_status === "Approved") && (
+                                                                <span>Waiting for Approval</span>
+                                                            )}
+                                                            {(item.application_status === "Applied" && dataUser?.ssc === null) ? (
+                                                                <button
+                                                                    className="btn btn-sm btn-outline-primary mb-3"
+                                                                    onClick={() => goToDocument()}
+                                                                >
+                                                                    Upload Image
+                                                                </button>
+                                                            ) : null}
+                                                            {(item.application_status === "Paid" && dataUser?.application_status === "Paid") && (
+                                                                <span>Application accepted (full paid)</span>
                                                             )}
                                                         </td>
                                                     </tr>

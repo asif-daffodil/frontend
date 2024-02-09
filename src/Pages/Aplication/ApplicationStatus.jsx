@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import CommonBanner from "../../Components/CommonBanner/CommonBanner";
-import AppBreadcrumb from "../../Components/Application/AppBreadcrumb/AppBreadcrumb";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useEffect } from "react";
@@ -15,8 +14,6 @@ const ApplicationStatus = () => {
             withCredentials: true,
         })
     );
-
-    console.log(data);
 
     useEffect(() => {
         refetch();
@@ -37,9 +34,6 @@ const ApplicationStatus = () => {
             />
             <div className="container">
                 <div className="row">
-                    <div className="col-md-12">
-                        <AppBreadcrumb />
-                    </div>
                     <div className="col-md-12 display-6 py-3">
                         Application <span className="text-primary">Status</span>
                     </div>
