@@ -11,7 +11,7 @@ const AdminLayouts = () => {
         overflowY: "scroll",
     }
     const { data, isLoading } = useQuery('repoData', () =>
-        axios.get('https://api.smubd.org/api/user', { withCredentials: true }).then(response => response.data.user)
+        axios.get('http://localhost:8000/api/user', { withCredentials: true }).then(response => response.data.user)
     )
 
     if (isLoading) return <div>Loading...</div>;

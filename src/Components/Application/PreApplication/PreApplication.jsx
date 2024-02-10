@@ -11,7 +11,7 @@ const PreApplication = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
     const navigate = useNavigate();
     const onSubmit = data => {
-        axios.post('https://api.smubd.org/api/preaplication', data, { withCredentials: true }).then(response => {
+        axios.post('http://localhost:8000/api/preaplication', data, { withCredentials: true }).then(response => {
             if (response.data.message === 'Preaplication successfully registered') {
                 Swal.fire({
                     text: 'Application successfully created',

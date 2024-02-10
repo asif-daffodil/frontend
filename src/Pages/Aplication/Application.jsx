@@ -10,12 +10,12 @@ const Application = () => {
     const navigate = useNavigate();
 
     const { isLoading, data, refetch } = useQuery("repoData", () =>
-        axios.get("https://api.smubd.org/api/checkpreaplication", {
+        axios.get("http://localhost:8000/api/checkpreaplication", {
             withCredentials: true,
         })
     );
 
-    const { isLoading: isLoadingUser, data: dataUser, refetch: refetchUser } = useQuery("appData", () => axios.get("https://api.smubd.org/api/get_individual_application", { withCredentials: true }).then(response => response.data));
+    const { isLoading: isLoadingUser, data: dataUser, refetch: refetchUser } = useQuery("appData", () => axios.get("http://localhost:8000/api/get_individual_application", { withCredentials: true }).then(response => response.data));
 
     useEffect(
         () => {
@@ -104,7 +104,7 @@ const Application = () => {
                                                             {new Date(item.created_at).toLocaleDateString()}
                                                         </td>
                                                         <td>
-                                                            {(item.application_status === "Approved" && dataUser?.length === 0) && (
+                                                            {(item.application_status === "Approved" && !dataUser?.application_status) && (
                                                                 <button
                                                                     className="btn btn-sm btn-outline-primary mb-3"
                                                                     onClick={() => goToNewApp()}
@@ -112,7 +112,7 @@ const Application = () => {
                                                                     Application of Salymbekov
                                                                 </button>
                                                             )}
-                                                            {(item.application_status === "Applied" && dataUser?.application_status !== "Pending") && (
+                                                            {(item.application_status === "Applied" && dataUser?.application_status !== "Pending" && dataUser?.ssc) && (
                                                                 <button
                                                                     className="btn btn-sm btn-outline-primary mb-3"
                                                                     onClick={() => goToPayment()}
@@ -120,10 +120,10 @@ const Application = () => {
                                                                     Apply For Visa
                                                                 </button>
                                                             )}
-                                                            {(item.application_status === "Applied" && dataUser?.application_status === "Pending") && (
+                                                            {(item.application_status === "Applied" && dataUser?.application_status === "Pending" && dataUser?.ssc) && (
                                                                 <span>Waiting for Approval</span>
                                                             )}
-                                                            {(item.application_status === "Paid" && dataUser?.application_status === "Approved") && (
+                                                            {(item.application_status === "Paid" && dataUser?.application_status === "Approved" && dataUser?.ssc) && (
                                                                 <span>Waiting for Approval</span>
                                                             )}
                                                             {(item.application_status === "Applied" && dataUser?.ssc === null) ? (

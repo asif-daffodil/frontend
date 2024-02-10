@@ -13,7 +13,7 @@ const NewApplication = () => {
   const navigate = useNavigate();
 
   const { isLoading, data, refetch } = useQuery("repoData", () =>
-    axios.get("https://api.smubd.org/api/checkpreaplication", {
+    axios.get("http://localhost:8000/api/checkpreaplication", {
       withCredentials: true,
     })
   );
@@ -22,7 +22,7 @@ const NewApplication = () => {
     if (!auth.user[0]) {
       navigate("/login");
     }
-    axios.get("https://api.smubd.org/api/get_individual_application", {
+    axios.get("http://localhost:8000/api/get_individual_application", {
       withCredentials: true,
     }).then((res) => {
       if (!res.data) {
@@ -64,7 +64,7 @@ const NewApplication = () => {
 
   const onSubmit = async (data) => {
     (async () => {
-      await axios.post("https://api.smubd.org/api/new-application", data, { withCredentials: true }).then((res) => {
+      await axios.post("http://localhost:8000/api/new-application", data, { withCredentials: true }).then((res) => {
         if (res.status === 201) {
           Swal.fire({
             text: res.data.message,
