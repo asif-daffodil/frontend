@@ -9,7 +9,7 @@ const ApplicationStatus = () => {
     const goToNewApp = () => {
         navigate("/newApplication");
     };
-    const { isLoading, data, refetch } = useQuery("repoData", () =>
+    const { isLoading, data, refetch } = useQuery("epoData", () =>
         axios.get("http://localhost:8000/api/checkpreaplication", {
             withCredentials: true,
         })

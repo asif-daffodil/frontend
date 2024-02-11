@@ -12,7 +12,7 @@ const NewApplication = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  const { isLoading, data, refetch } = useQuery("repoData", () =>
+  const { isLoading, data, refetch } = useQuery("poData", () =>
     axios.get("http://localhost:8000/api/checkpreaplication", {
       withCredentials: true,
     })
