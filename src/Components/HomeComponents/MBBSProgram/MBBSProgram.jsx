@@ -38,7 +38,7 @@ const MBBSProgram = () => {
                         <li>Passport copy.</li>
                         <li>Passport size photo (white background)</li>
                     </ul>
-                    <Link to="/apply" className="btn btn-danger me-3">Apply For Admission</Link>
+                    <Link to="/application" className="btn btn-danger me-3">Apply For Admission</Link>
                     <Link to="/apply" className="btn btn-primary">View More</Link>
                 </div>
             </div>
