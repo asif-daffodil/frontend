@@ -19,6 +19,7 @@ const Home = () => {
             behavior: "instant",
         });
     }, []);
+
     return (
         <div>
             <HomeSlider />

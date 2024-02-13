@@ -1,0 +1,21 @@
+.event-slider .swiper {
+  width: 100%;
+}
+
+.event-slider .swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 300px;
+  /* height: 300px; */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  /* opacity: 0.4; */
+}
+
+/* .event-slider .swiper-slide-active {
+  opacity: 1;
+} */
+
+.event-slider .swiper-slide img {
+  display: block;
+  width: 100%;
+}
