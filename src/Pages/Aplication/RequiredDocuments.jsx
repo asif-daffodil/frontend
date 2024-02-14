@@ -10,7 +10,7 @@ import { useQuery } from "react-query";
 const RequiredDocuments = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
   const navigate = useNavigate();
-  const { data, isLoading, refetch } = useQuery('user', () => axios.get('http://localhost:8000/api/get_individual_application', { withCredentials: true }).then(response => response.data));
+  const { data, isLoading, refetch } = useQuery('user', () => axios.get('https://api.smubd.org/api/get_individual_application', { withCredentials: true }).then(response => response.data));
   const onSubmit = (data) => {
     (async () => {
       const formData = new FormData();
@@ -18,7 +18,7 @@ const RequiredDocuments = () => {
       formData.append('hsc', data.hsc[0]);
       formData.append('passport', data.passport[0]);
       formData.append('photo', data.photo[0]);
-      await axios.post('http://localhost:8000/api/upload', formData, {
+      await axios.post('https://api.smubd.org/api/upload', formData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data'

@@ -8,7 +8,7 @@ const useUser = () => {
     useEffect(() => {
         (
             async () => {
-                const response = await fetch('http://localhost:8000/api/user', {
+                const response = await fetch('https://api.smubd.org/api/user', {
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include'
                 });
