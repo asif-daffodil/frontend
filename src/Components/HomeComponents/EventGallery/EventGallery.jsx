@@ -53,6 +53,14 @@ const eventGallery = [
         id: 10,
         image: image5
     },
+    {
+        id: 11,
+        image: image1
+    },
+    {
+        id: 12,
+        image: image2
+    },
 ]
 
 const EventGallery = () => {
@@ -62,7 +70,7 @@ const EventGallery = () => {
             slidesPerView: 2,
         },
         640: {
-            slidesPerView: 3,
+            slidesPerView: 3.1,
         },
     };
     return (
