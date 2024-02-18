@@ -16,7 +16,7 @@ const AdminLayouts = () => {
 
     if (isLoading) return <div>Loading...</div>;
 
-    if (data.role !== "admin") return navigate("/");
+    if (data?.role !== "admin") return navigate("/");
 
     return (
         <div className="container-fluid">
