@@ -8,7 +8,7 @@ const PaidApplicants = () => {
     const { data: paidData, isLoading, refetch } = useQuery("paidApplicant", () =>
         axios
             .get(
-                `https://api.smubd.org/api/get_all_paid_applicant`,
+                `http://localhost:8000/api/get_all_paid_applicant`,
                 { withCredentials: true }
             )
             .then((response) => response.data)

@@ -26,7 +26,7 @@ const Signup = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
 
     const onSubmit = data => {
-        axios.post('https://api.smubd.org/api/login', data, { withCredentials: true })
+        axios.post('http://localhost:8000/api/login', data, { withCredentials: true})
             .then(response => {
                 if (response.data.message === 'User successfully logged in') {
                     auth.login(response.data.user);
@@ -37,6 +37,8 @@ const Signup = () => {
                         position: "top-end",
                         showConfirmButton: false,
                     }).then(() => {
+                        // set response.data.token into cookie
+                        document.cookie = `jwt=${response.data.token};`;
                         setTimeout(() => {
                             navigate('/');
                         }, 2000);

@@ -10,12 +10,12 @@ const Application = () => {
     const navigate = useNavigate();
 
     const { isLoading, data, refetch } = useQuery("repoData", () =>
-        axios.get("https://api.smubd.org/api/checkpreaplication", {
+        axios.get("http://localhost:8000/api/checkpreaplication", {
             withCredentials: true,
         })
     );
 
-    const { isLoading: isLoadingUser, data: dataUser, refetch: refetchUser } = useQuery("appData", () => axios.get("https://api.smubd.org/api/get_individual_application", { withCredentials: true }).then(response => response.data));
+    const { isLoading: isLoadingUser, data: dataUser, refetch: refetchUser } = useQuery("appData", () => axios.get("http://localhost:8000/api/get_individual_application", { withCredentials: true }).then(response => response.data));
 
     useEffect(
         () => {

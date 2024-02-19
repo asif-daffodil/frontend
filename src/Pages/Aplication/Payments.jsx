@@ -10,7 +10,7 @@ import { useEffect } from "react";
 const Payments = () => {
     const navigate = useNavigate();
     const { data, isLoading, refetch } = useQuery("payData", () =>
-        axios.get("https://api.smubd.org/api/get_individual_application", {
+        axios.get("http://localhost:8000/api/get_individual_application", {
             withCredentials: true,
         })
     );
@@ -38,7 +38,7 @@ const Payments = () => {
         formData.append("screenshot", data.screenshot[0]);
         (async () => {
             await axios
-                .post("https://api.smubd.org/api/update-payment", formData, {
+                .post("http://localhost:8000/api/update-payment", formData, {
                     withCredentials: true,
                     headers: {
                         "Content-Type": "multipart/form-data",

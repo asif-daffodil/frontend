@@ -10,7 +10,7 @@ const ApplicationStatus = () => {
         navigate("/newApplication");
     };
     const { isLoading, data, refetch } = useQuery("epoData", () =>
-        axios.get("https://api.smubd.org/api/checkpreaplication", {
+        axios.get("http://localhost:8000/api/checkpreaplication", {
             withCredentials: true,
         })
     );

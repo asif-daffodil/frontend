@@ -12,7 +12,7 @@ const IndividualApplicant = () => {
     const { data, isLoading, refetch } = useQuery("singleApplicant", () =>
         axios
             .get(
-                `https://api.smubd.org/api/get-individual-applicant/${id}`,
+                `http://localhost:8000/api/get-individual-applicant/${id}`,
                 { withCredentials: true }
             )
             .then((response) => response.data)
@@ -22,7 +22,7 @@ const IndividualApplicant = () => {
     }
 
     const approveHandle = async (id) => {
-        await axios.post(`https://api.smubd.org/api/approve-applicant/${id}/Approved`, {
+        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
             withCredentials: true
         }).then(res => {
             if (res.status === 200) {
@@ -39,7 +39,7 @@ const IndividualApplicant = () => {
     };
 
     const cancelHandle = async (id) => {
-        await axios.post(`https://api.smubd.org/api/approve-applicant/${id}/Canceled`, {
+        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
             withCredentials: true
         }).then(res => {
             if (res.status === 200) {

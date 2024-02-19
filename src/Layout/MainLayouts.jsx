@@ -10,7 +10,7 @@ const MainLayouts = () => {
 
     const auth = useAuth();
     const { isLoading, data } = useQuery('repoData', () =>
-        axios.get('https://api.smubd.org/api/user', { withCredentials: true }).then(response => auth.login(response.data.user))
+        axios.get('http://localhost:8000/api/user', { withCredentials: true }).then(response => auth.login(response.data.user))
     )
 
 

@@ -10,7 +10,7 @@ const LogoutBtn = () => {
 
 
     const logout = () => {
-        fetch('https://api.smubd.org/api/logout', {
+        fetch('http://localhost:8000/api/logout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include'
