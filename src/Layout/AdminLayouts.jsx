@@ -10,8 +10,14 @@ const AdminLayouts = () => {
         minHeight: "100vh",
         overflowY: "scroll",
     }
+    
+
+    const jwtCookie = document.cookie.split('; ').find(row => row.startsWith('jwt='));
+    if (!jwtCookie) return navigate("/login");
+    const jwt = jwtCookie.split('=')[1];
+
     const { data, isLoading } = useQuery('repoData', () =>
-        axios.get('http://localhost:8000/api/user', { withCredentials: true }).then(response => response.data.user)
+        axios.get('http://localhost:8000/api/user', { withCredentials: true, headers: {Authorization: `Bearer ${jwt}`} }).then(response => response.data.user)
     )
 
     if (isLoading) return <div>Loading...</div>;

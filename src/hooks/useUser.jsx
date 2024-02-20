@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { checkAuth } from "./checkAuth";
+import axios from "axios";
 
 
 const useUser = () => {
@@ -8,12 +9,21 @@ const useUser = () => {
     useEffect(() => {
         (
             async () => {
-                const response = await fetch('http://localhost:8000/api/user');
+                const jwtCookie = document.cookie.split('; ').find(row => row.startsWith('jwt='));
 
-                const content = await response.json();
-
-                setUser(content);
-                checkAuth.value = true;
+                if (jwtCookie) {
+                    const jwt = jwtCookie.split('=')[1];
+                    const response = await axios.get('http://localhost:8000/api/user', {
+                        headers: {
+                            Authorization: `Bearer ${jwt}`
+                        }}
+                    );
+                    setUser(response.data);
+                    checkAuth.value = true;
+                }
+            
+                checkAuth.value = false;
+                
             }
         )()
     }, [user]);
