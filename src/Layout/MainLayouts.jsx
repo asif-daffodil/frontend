@@ -4,16 +4,11 @@ import MainNavbar from "../Components/MainNavbar/MainNavbar";
 import TopHeader from "../Components/TopHeader/TopHeader";
 import { useAuth } from "../hooks/auth";
 import axios from "axios";
+import useJwt from "../hooks/useJwt";
 import { useQuery } from "react-query";
 
+
 const MainLayouts = () => {
-
-    const auth = useAuth();
-    const { isLoading, data } = useQuery('repoData', () =>
-        axios.get('http://localhost:8000/api/user', { withCredentials: true }).then(response => auth.login(response.data.user))
-    )
-
-
 
     return (
         <>

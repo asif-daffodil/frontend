@@ -4,15 +4,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import useJwt from "../../../hooks/useJwt";
+
 
 const WaitingApplicant = () => {
+  const jwt = useJwt();
   const [pageNo, setPageNo] = useState(1);
   const [pageLimit, setPageLimit] = useState(5);
   const { data, isLoading, refetch } = useQuery("preApplicants", () =>
     axios
       .get(
         `http://localhost:8000/api/waiting-applicant/${pageNo}/${pageLimit}`,
-        { withCredentials: true }
+        { withCredentials: true, headers: { Authorization: `Bearer ${jwt}` } }
       )
       .then((response) => response.data)
   );
@@ -31,8 +34,8 @@ const WaitingApplicant = () => {
 
 
   const cancelHandle = async (id) => {
-    await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Canceled`, {
-      withCredentials: true
+    jwt && await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Canceled`, {
+      withCredentials: true, headers: { Authorization: `Bearer ${jwt}` }
     }).then(res => {
       if (res.status === 200) {
         Swal.fire({

@@ -2,19 +2,21 @@ import { useEffect, useState } from "react";
 import CommonBanner from "../../Components/CommonBanner/CommonBanner";
 import { useAuth } from "../../hooks/auth";
 import { useNavigate } from "react-router-dom";
-import AppBreadcrumb from "../../Components/Application/AppBreadcrumb/AppBreadcrumb";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import { useQuery } from "react-query";
+import useJwt from "../../hooks/useJwt";
+
 
 const NewApplication = () => {
+  const jwt = useJwt();
   const auth = useAuth();
   const navigate = useNavigate();
 
   const { isLoading, data, refetch } = useQuery("poData", () =>
-    axios.get("http://localhost:8000/api/checkpreaplication", {
-      withCredentials: true,
+    jwt && axios.get("http://localhost:8000/api/checkpreaplication", {
+      withCredentials: true, headers: { Authorization: `Bearer ${jwt}` },
     })
   );
 
@@ -22,8 +24,8 @@ const NewApplication = () => {
     if (!auth.user[0]) {
       navigate("/login");
     }
-    axios.get("http://localhost:8000/api/get_individual_application", {
-      withCredentials: true,
+    jwt && axios.get("http://localhost:8000/api/get_individual_application", {
+      withCredentials: true, headers: { Authorization: `Bearer ${jwt}` },
     }).then((res) => {
       if (!res.data) {
         navigate("/requiredDocuments");
@@ -64,7 +66,7 @@ const NewApplication = () => {
 
   const onSubmit = async (data) => {
     (async () => {
-      await axios.post("http://localhost:8000/api/new-application", data, { withCredentials: true }).then((res) => {
+      jwt && await axios.post("http://localhost:8000/api/new-application", data, { withCredentials: true, headers: { Authorization: `Bearer ${jwt}` } }).then((res) => {
         if (res.status === 201) {
           Swal.fire({
             text: res.data.message,

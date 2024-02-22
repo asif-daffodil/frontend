@@ -5,8 +5,11 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import useJwt from "../../../hooks/useJwt";
+
 
 const ApprovedApplicants = () => {
+    const jwt = useJwt();
     const [pageNo, setPageNo] = useState(1);
     const navigate = useNavigate();
     const [pageLimit, setPageLimit] = useState(5);
@@ -14,7 +17,7 @@ const ApprovedApplicants = () => {
         axios
             .get(
                 `http://localhost:8000/api/get-approved-applicant/${pageNo}/${pageLimit}`,
-                { withCredentials: true }
+                { withCredentials: true, headers: { Authorization: `Bearer ${jwt}` } }
             )
             .then((response) => response.data)
     );
@@ -36,8 +39,8 @@ const ApprovedApplicants = () => {
     }, [pageNo, data]);
 
     const approveHandle = async (id) => {
-        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
-            withCredentials: true
+        jwt && await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
+            withCredentials: true, headers: { Authorization: `Bearer ${jwt}` }
         }).then(res => {
             if (res.status === 200) {
                 Swal.fire({
@@ -53,8 +56,8 @@ const ApprovedApplicants = () => {
     };
 
     const cancelHandle = async (id) => {
-        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
-            withCredentials: true
+        jwt && await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
+            withCredentials: true, headers: { Authorization: `Bearer ${jwt}` }
         }).then(res => {
             if (res.status === 200) {
                 Swal.fire({

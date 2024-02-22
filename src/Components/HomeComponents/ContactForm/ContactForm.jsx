@@ -16,18 +16,20 @@ const ContactForm = () => {
                         <h2>Contact Information</h2>
                         <p className='mb-5'>Say something to start a live chat</p>
                         <table className='' cellPadding="6">
-                            <tr>
-                                <td><FontAwesomeIcon icon={faPhone} /></td>
-                                <td>+996 555 014 870</td>
-                            </tr>
-                            <tr>
-                                <td><FontAwesomeIcon icon={faEnvelope} /></td>
-                                <td>smu.bangladesh@gmail.com</td>
-                            </tr>
-                            <tr>
-                                <td><FontAwesomeIcon icon={faLocationDot} /></td>
-                                <td>Bishkek, Kyrgyzstan</td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td><FontAwesomeIcon icon={faPhone} /></td>
+                                    <td>+996 555 014 870</td>
+                                </tr>
+                                <tr>
+                                    <td><FontAwesomeIcon icon={faEnvelope} /></td>
+                                    <td>smu.bangladesh@gmail.com</td>
+                                </tr>
+                                <tr>
+                                    <td><FontAwesomeIcon icon={faLocationDot} /></td>
+                                    <td>Bishkek, Kyrgyzstan</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                     <div className="col-md-6 text-center text-primary">

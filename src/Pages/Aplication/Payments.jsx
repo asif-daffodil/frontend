@@ -6,12 +6,15 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useEffect } from "react";
+import useJwt from "../../hooks/useJwt";
+
 
 const Payments = () => {
+    const jwt = useJwt();
     const navigate = useNavigate();
     const { data, isLoading, refetch } = useQuery("payData", () =>
-        axios.get("http://localhost:8000/api/get_individual_application", {
-            withCredentials: true,
+        jwt && axios.get("http://localhost:8000/api/get_individual_application", {
+            withCredentials: true, headers: { Authorization: `Bearer ${jwt}` },
         })
     );
 
@@ -39,7 +42,7 @@ const Payments = () => {
         (async () => {
             await axios
                 .post("http://localhost:8000/api/update-payment", formData, {
-                    withCredentials: true,
+                    withCredentials: true, headers: { Authorization: `Bearer ${jwt}` },
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },

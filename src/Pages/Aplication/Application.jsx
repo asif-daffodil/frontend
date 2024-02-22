@@ -4,22 +4,25 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../hooks/auth";
 import { useQuery } from "react-query";
+import useJwt from "../../hooks/useJwt";
+
 
 const Application = () => {
+    const jwt = useJwt();
     const auth = useAuth();
     const navigate = useNavigate();
 
     const { isLoading, data, refetch } = useQuery("repoData", () =>
-        axios.get("http://localhost:8000/api/checkpreaplication", {
-            withCredentials: true,
+        jwt && axios.get("http://localhost:8000/api/checkpreaplication", {
+            headers: { Authorization: `Bearer ${jwt}` },
         })
     );
 
-    const { isLoading: isLoadingUser, data: dataUser, refetch: refetchUser } = useQuery("appData", () => axios.get("http://localhost:8000/api/get_individual_application", { withCredentials: true }).then(response => response.data));
+    const { isLoading: isLoadingUser, data: dataUser, refetch: refetchUser } = useQuery("appData", () => jwt && axios.get("http://localhost:8000/api/get_individual_application", { headers: { Authorization: `Bearer ${jwt}` } }).then(response => response.data));
 
     useEffect(
         () => {
-            if (!auth.user[0]) {
+            if (!jwt && !auth.user[0]) {
                 navigate("/login");
             }
             refetch();
@@ -40,6 +43,7 @@ const Application = () => {
         navigate("/requiredDocuments");
     };
     if (isLoading) return <div>Loading...</div>;
+    if (isLoadingUser) return <div>Loading...</div>;
     return (
         <>
             <CommonBanner

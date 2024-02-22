@@ -4,6 +4,9 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useAuth } from '../../hooks/auth';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+import useJwt from '../../hooks/useJwt';
+import { useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 const bannerBg = {
     backgroundImage: `url(${bannerImg})`,
@@ -15,6 +18,7 @@ const bannerBg = {
 
 
 const Signup = () => {
+    const jwt = useJwt();
     const navigate = useNavigate();
     const auth = useAuth();
 
@@ -25,8 +29,27 @@ const Signup = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
 
+    useEffect(() => {
+        (async () => {
+            jwt && await axios.get('http://localhost:8000/api/user', { headers: { Authorization: `Bearer ${jwt}` } })
+                .then(response => {
+                    if (response.data.role === "admin") {
+                        navigate('/admin');
+                    }
+                }).catch(() => {
+                    navigate('/');
+                })
+        })()
+    }, [])
+
+
     const onSubmit = data => {
-        axios.post('http://localhost:8000/api/login', data, { withCredentials: true,})
+        axios.post('http://localhost:8000/api/login', data, {
+            headers:
+            {
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => {
                 if (response.data.message === 'User successfully logged in') {
                     auth.login(response.data.user);
@@ -38,7 +61,7 @@ const Signup = () => {
                         showConfirmButton: false,
                     }).then(() => {
                         // set response.data.token into cookie http only and secure true
-                        document.cookie = `jwt=${response.data.token};`;
+                        Cookies.set('jwt', response.data.token, { expires: 1, secure: true });
                         setTimeout(() => {
                             navigate('/');
                         }, 2000);

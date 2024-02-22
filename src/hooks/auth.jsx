@@ -1,9 +1,20 @@
 import { createContext, useContext, useState } from 'react';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState([]);
+    const jwt = Cookies.get('jwt');
+
+    useState(() => {
+        jwt && axios.get('http://localhost:8000/api/user', {
+            headers: {
+                Authorization: `Bearer ${jwt}`
+            }
+        }).then(response => setUser([response.data])).catch(() => { Cookies.remove('jwt'); setUser([]) });
+    }, [jwt]);
 
     const login = (user) => {
         setUser([user]);
@@ -11,6 +22,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setUser([]);
+        Cookies.remove('jwt');
     };
 
     return (

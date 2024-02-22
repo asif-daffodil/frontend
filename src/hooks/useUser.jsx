@@ -1,32 +1,27 @@
 import { useEffect, useState } from "react";
 import { checkAuth } from "./checkAuth";
 import axios from "axios";
+import useJwt from "./useJwt";
 
 
 const useUser = () => {
     const [user, setUser] = useState(null);
+    const jwt = useJwt();
 
     useEffect(() => {
         (
             async () => {
-                const jwtCookie = document.cookie.split('; ').find(row => row.startsWith('jwt='));
-
-                if (jwtCookie) {
-                    const jwt = jwtCookie.split('=')[1];
-                    const response = await axios.get('http://localhost:8000/api/user', {
-                        headers: {
-                            Authorization: `Bearer ${jwt}`
-                        }}
-                    );
-                    setUser(response.data);
-                    checkAuth.value = true;
+                const response = jwt && await axios.get('http://localhost:8000/api/user', {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`
+                    }
                 }
-            
-                checkAuth.value = false;
-                
+                );
+                setUser(response.data);
+                checkAuth.value = true;
             }
         )()
-    }, [user]);
+    }, []);
 
     return [user, setUser];
 };

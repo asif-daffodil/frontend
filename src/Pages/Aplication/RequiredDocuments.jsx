@@ -6,11 +6,14 @@ import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
+import useJwt from "../../hooks/useJwt";
+
 
 const RequiredDocuments = () => {
+  const jwt = useJwt();
   const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
   const navigate = useNavigate();
-  const { data, isLoading, refetch } = useQuery('user', () => axios.get('http://localhost:8000/api/get_individual_application', { withCredentials: true }).then(response => response.data));
+  const { data, isLoading, refetch } = useQuery('user', () => jwt && axios.get('http://localhost:8000/api/get_individual_application', { headers: { Authorization: `Bearer ${jwt}` } }).then(response => response.data));
   const onSubmit = (data) => {
     (async () => {
       const formData = new FormData();
@@ -18,11 +21,8 @@ const RequiredDocuments = () => {
       formData.append('hsc', data.hsc[0]);
       formData.append('passport', data.passport[0]);
       formData.append('photo', data.photo[0]);
-      await axios.post('http://localhost:8000/api/upload', formData, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+      jwt && await axios.post('http://localhost:8000/api/upload', formData, {
+        headers: { Authorization: `Bearer ${jwt}` },
       }).then(response => {
         if (response.data.message === 'Documents successfully uploaded') {
           Swal.fire({

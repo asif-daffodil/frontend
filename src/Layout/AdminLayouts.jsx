@@ -2,28 +2,24 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "../Components/AdminPanel/Sidebar/Sidebar";
 import { useQuery } from "react-query";
 import axios from "axios";
+import useJwt from "../hooks/useJwt";
+
 
 
 const AdminLayouts = () => {
+    const jwt = useJwt();
     const navigate = useNavigate();
     const style = {
         minHeight: "100vh",
         overflowY: "scroll",
     }
-    
 
-    const jwtCookie = document.cookie.split('; ').find(row => row.startsWith('jwt='));
-    if (!jwtCookie) return navigate("/login");
-    const jwt = jwtCookie.split('=')[1];
-
-    const { data, isLoading } = useQuery('repoData', () =>
-        axios.get('http://localhost:8000/api/user', { withCredentials: true, headers: {Authorization: `Bearer ${jwt}`} }).then(response => response.data.user)
+    const { data: pata, isLoading } = useQuery('repoooData', () =>
+        jwt ? axios.get('http://localhost:8000/api/user',
+            { headers: { 'Authorization': `Bearer ${jwt}` } }) : null
     )
-
     if (isLoading) return <div>Loading...</div>;
-
-    if (data?.role !== "admin") return navigate("/");
-
+    if (pata && pata?.data?.user?.role !== "admin") navigate("/");
     return (
         <div className="container-fluid">
             <div className="row">

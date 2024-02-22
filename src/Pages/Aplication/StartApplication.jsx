@@ -7,15 +7,18 @@ import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import PreApplication from "../../Components/Application/PreApplication/PreApplication";
 import { useQuery } from "react-query";
+import useJwt from "../../hooks/useJwt";
+
 
 const StartApplication = () => {
+    const jwt = useJwt();
     const auth = useAuth();
     const navigate = useNavigate();
 
     const { isLoading, data, refetch } = useQuery("oData", () =>
-        axios
+        jwt && axios
             .get("http://localhost:8000/api/checkpreaplication", {
-                withCredentials: true,
+                headers: { Authorization: `Bearer ${jwt}` },
             })
             .then((response) => response.data)
     );
@@ -50,9 +53,9 @@ const StartApplication = () => {
         formState: { errors },
     } = useForm({ mode: "onChange" });
     const onSubmit = async (data) => {
-        await axios
+        jwt && await axios
             .post("http://localhost:8000/api/updateFirstPart", data, {
-                withCredentials: true,
+                headers: { Authorization: `Bearer ${jwt}` },
             })
             .then((response) => {
                 if (response.data.message === "User successfully updated") {

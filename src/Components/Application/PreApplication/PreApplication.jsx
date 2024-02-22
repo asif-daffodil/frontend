@@ -3,15 +3,18 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import useJwt from '../../../hooks/useJwt';
+
 
 const PreApplication = () => {
+    const jwt = useJwt();
     const [bootmMessage, setBootmMessage] = useState('');
     const [displaypermanent_resident, setDisplaypermanent_resident] = useState('d-none');
     const [displayLocation, setDisplayLocation] = useState('d-none');
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
+    const { register, handleSubmit } = useForm({ mode: "onChange" });
     const navigate = useNavigate();
     const onSubmit = data => {
-        axios.post('http://localhost:8000/api/preaplication', data, { withCredentials: true }).then(response => {
+        jwt && axios.post('http://localhost:8000/api/preaplication', data, { withCredentials: true, headers: { Authorization: `Bearer ${jwt}` } }).then(response => {
             if (response.data.message === 'Preaplication successfully registered') {
                 Swal.fire({
                     text: 'Application successfully created',

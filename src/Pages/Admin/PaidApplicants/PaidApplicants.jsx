@@ -1,15 +1,15 @@
-import { faCheck, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useQuery } from "react-query";
+import useJwt from "../../../hooks/useJwt";
+
 
 const PaidApplicants = () => {
-
-    const { data: paidData, isLoading, refetch } = useQuery("paidApplicant", () =>
+    const jwt = useJwt();
+    const { data: paidData, isLoading } = useQuery("paidApplicant", () =>
         axios
             .get(
                 `http://localhost:8000/api/get_all_paid_applicant`,
-                { withCredentials: true }
+                { withCredentials: true, headers: { Authorization: `Bearer ${jwt}` } }
             )
             .then((response) => response.data)
     );

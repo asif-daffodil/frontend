@@ -3,15 +3,18 @@ import CommonBanner from "../../Components/CommonBanner/CommonBanner";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useEffect } from "react";
+import useJwt from "../../hooks/useJwt";
+
 
 const ApplicationStatus = () => {
+    const jwt = useJwt();
     const navigate = useNavigate();
     const goToNewApp = () => {
         navigate("/newApplication");
     };
     const { isLoading, data, refetch } = useQuery("epoData", () =>
-        axios.get("http://localhost:8000/api/checkpreaplication", {
-            withCredentials: true,
+        jwt && axios.get("http://localhost:8000/api/checkpreaplication", {
+            withCredentials: true, headers: { Authorization: `Bearer ${jwt}` },
         })
     );
 

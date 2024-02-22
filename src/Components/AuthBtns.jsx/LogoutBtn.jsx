@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import useJwt from "../../hooks/useJwt";
+import Cookies from 'js-cookie';
 
 
 const LogoutBtn = () => {
+    const jwt = useJwt();
     const auth = useAuth();
     const navigate = useNavigate();
 
@@ -12,10 +15,12 @@ const LogoutBtn = () => {
     const logout = () => {
         fetch('http://localhost:8000/api/logout', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
+            headers: {
+                'Authorization': `Bearer ${jwt}`,
+            },
         }).then(() => {
             auth.logout();
+            Cookies.remove('jwt');
             Swal.fire({
                 title: 'Success',
                 text: 'You have been logged out',
