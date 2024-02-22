@@ -15,7 +15,7 @@ const WaitingApplicant = () => {
     axios
       .get(
         `http://localhost:8000/api/waiting-applicant/${pageNo}/${pageLimit}`,
-        { withCredentials: true, headers: { Authorization: `Bearer ${jwt}` } }
+        {  headers: { Authorization: `Bearer ${jwt}` } }
       )
       .then((response) => response.data)
   );
@@ -34,8 +34,8 @@ const WaitingApplicant = () => {
 
 
   const cancelHandle = async (id) => {
-    jwt && await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Canceled`, {
-      withCredentials: true, headers: { Authorization: `Bearer ${jwt}` }
+    await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Canceled`, {
+       headers: { Authorization: `Bearer ${jwt}` }
     }).then(res => {
       if (res.status === 200) {
         Swal.fire({
@@ -57,7 +57,7 @@ const WaitingApplicant = () => {
     <div className="row">
       <div className="col-md-12">
         <h2>Waiting Applicants</h2>
-        {data.total > 0 && (
+        {data && (
           <>
             <table className="table table-bordered  table-striped ">
               <thead>
@@ -71,7 +71,7 @@ const WaitingApplicant = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.data.map((preApplicant, index) => (
+                {data.map((preApplicant, index) => (
                   <tr key={preApplicant.id}>
                     <td>{index + 1}</td>
                     <td>
@@ -123,7 +123,7 @@ const WaitingApplicant = () => {
             </div>
           </>
         )}
-        {data.total === 0 && <div className="display-6">No Pre Applicants</div>}
+        {data.length === 0 && <div className="display-6">No Pre Applicants</div>}
       </div>
     </div>
   );

@@ -13,8 +13,8 @@ const ApplicationStatus = () => {
         navigate("/newApplication");
     };
     const { isLoading, data, refetch } = useQuery("epoData", () =>
-        jwt && axios.get("http://localhost:8000/api/checkpreaplication", {
-            withCredentials: true, headers: { Authorization: `Bearer ${jwt}` },
+        axios.get("http://localhost:8000/api/checkpreaplication", {
+             headers: { Authorization: `Bearer ${jwt}` },
         })
     );
 

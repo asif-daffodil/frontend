@@ -11,11 +11,11 @@ const PreApplicants = () => {
   const jwt = useJwt();
   const [pageNo, setPageNo] = useState(1);
   const [pageLimit, setPageLimit] = useState(5);
-  const { data, isLoading, refetch } = useQuery("preApplicants", () =>
-    jwt && axios
+  const { data, isLoading, refetch } = useQuery("preApplicantss", () =>
+    axios
       .get(
         `http://localhost:8000/api/get-pre-applicant/${pageNo}/${pageLimit}`,
-        { withCredentials: true, headers: { Authorization: `Bearer ${jwt}` } }
+        { headers: { Authorization: `Bearer ${jwt}` } }
       )
       .then((response) => response.data)
   );
@@ -33,8 +33,8 @@ const PreApplicants = () => {
   }, [pageNo, data]);
 
   const approveHandle = async (id) => {
-    jwt && await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Approved`, {
-      withCredentials: true, headers: { Authorization: `Bearer ${jwt}` }
+    await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Approved`, {
+       headers: { Authorization: `Bearer ${jwt}` }
     }).then(res => {
       if (res.status === 200) {
         Swal.fire({
@@ -50,8 +50,8 @@ const PreApplicants = () => {
   };
 
   const cancelHandle = async (id) => {
-    jwt && await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Canceled`, {
-      withCredentials: true, headers: { Authorization: `Bearer ${jwt}` }
+    await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Canceled`, {
+       headers: { Authorization: `Bearer ${jwt}` }
     }).then(res => {
       if (res.status === 200) {
         Swal.fire({
@@ -73,7 +73,7 @@ const PreApplicants = () => {
     <div className="row">
       <div className="col-md-12">
         <h2>Pre Applicants</h2>
-        {data.total > 0 && (
+        {data && (
           <>
             <table className="table table-bordered  table-striped ">
               <thead>
@@ -87,7 +87,7 @@ const PreApplicants = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.data.map((preApplicant, index) => (
+                {data.map((preApplicant, index) => (
                   <tr key={preApplicant.id}>
                     <td>{index + 1}</td>
                     <td>
@@ -145,7 +145,7 @@ const PreApplicants = () => {
             </div>
           </>
         )}
-        {data.total === 0 && <div className="display-6">No Pre Applicants</div>}
+        {data?.length === 0 && <div className="display-6">No Pre Applicants</div>}
       </div>
     </div>
   );

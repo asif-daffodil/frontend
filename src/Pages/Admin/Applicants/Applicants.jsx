@@ -17,7 +17,7 @@ const Applicants = () => {
     axios
       .get(
         `http://localhost:8000/api/get-applicant/${pageNo}/${pageLimit}`,
-        { withCredentials: true, headers: { Authorization: `Bearer ${jwt}` } }
+        {  headers: { Authorization: `Bearer ${jwt}` } }
       )
       .then((response) => response.data)
   );
@@ -39,8 +39,8 @@ const Applicants = () => {
   }, [pageNo, data]);
 
   const approveHandle = async (id) => {
-    jwt && await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
-      withCredentials: true, headers: { Authorization: `Bearer ${jwt}` }
+    await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
+       headers: { Authorization: `Bearer ${jwt}` }
     }).then(res => {
       if (res.status === 200) {
         Swal.fire({
@@ -56,8 +56,8 @@ const Applicants = () => {
   };
 
   const cancelHandle = async (id) => {
-    jwt && await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
-      withCredentials: true, headers: { Authorization: `Bearer ${jwt}` }
+    await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
+       headers: { Authorization: `Bearer ${jwt}` }
     }).then(res => {
       if (res.status === 200) {
         Swal.fire({
@@ -79,7 +79,7 @@ const Applicants = () => {
     <div className="row">
       <div className="col-md-12">
         <h2>Pre Applicants</h2>
-        {data.total > 0 && (
+        {data && (
           <>
             <table className="table table-bordered  table-striped ">
               <thead>
@@ -149,7 +149,7 @@ const Applicants = () => {
             </div>
           </>
         )}
-        {data.total === 0 && <div className="display-6">No Pre Applicants</div>}
+        {data.length === 0 && <div className="display-6">No Pre Applicants</div>}
       </div>
     </div>
   );

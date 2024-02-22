@@ -7,6 +7,7 @@ import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import { useQuery } from "react-query";
 import useJwt from "../../hooks/useJwt";
+import Cookies from "js-cookie";
 
 
 const NewApplication = () => {
@@ -14,18 +15,18 @@ const NewApplication = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  const { isLoading, data, refetch } = useQuery("poData", () =>
-    jwt && axios.get("http://localhost:8000/api/checkpreaplication", {
-      withCredentials: true, headers: { Authorization: `Bearer ${jwt}` },
-    })
-  );
+  const { isLoading, data, refetch } = useQuery("poData", async () => {
+    await axios.get("http://localhost:8000/api/checkpreaplication", {
+        headers: { Authorization: `Bearer ` + Cookies.get("jwt") },
+      });
+  });
 
   useEffect(() => {
     if (!auth.user[0]) {
       navigate("/login");
     }
     jwt && axios.get("http://localhost:8000/api/get_individual_application", {
-      withCredentials: true, headers: { Authorization: `Bearer ${jwt}` },
+       headers: { Authorization: `Bearer ${jwt}` },
     }).then((res) => {
       if (!res.data) {
         navigate("/requiredDocuments");
@@ -66,7 +67,7 @@ const NewApplication = () => {
 
   const onSubmit = async (data) => {
     (async () => {
-      jwt && await axios.post("http://localhost:8000/api/new-application", data, { withCredentials: true, headers: { Authorization: `Bearer ${jwt}` } }).then((res) => {
+      await axios.post("http://localhost:8000/api/new-application", data, { headers: { Authorization: `Bearer ${jwt}` } }).then((res) => {
         if (res.status === 201) {
           Swal.fire({
             text: res.data.message,

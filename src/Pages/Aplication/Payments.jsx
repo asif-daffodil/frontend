@@ -13,8 +13,8 @@ const Payments = () => {
     const jwt = useJwt();
     const navigate = useNavigate();
     const { data, isLoading, refetch } = useQuery("payData", () =>
-        jwt && axios.get("http://localhost:8000/api/get_individual_application", {
-            withCredentials: true, headers: { Authorization: `Bearer ${jwt}` },
+        axios.get("http://localhost:8000/api/get_individual_application", {
+             headers: { Authorization: `Bearer ${jwt}` },
         })
     );
 
@@ -42,7 +42,7 @@ const Payments = () => {
         (async () => {
             await axios
                 .post("http://localhost:8000/api/update-payment", formData, {
-                    withCredentials: true, headers: { Authorization: `Bearer ${jwt}` },
+                     headers: { Authorization: `Bearer ${jwt}` },
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },

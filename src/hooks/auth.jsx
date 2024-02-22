@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     const jwt = Cookies.get('jwt');
 
     useState(() => {
-        jwt && axios.get('http://localhost:8000/api/user', {
+        axios.get('http://localhost:8000/api/user', {
             headers: {
                 Authorization: `Bearer ${jwt}`
             }

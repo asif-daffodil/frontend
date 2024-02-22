@@ -9,7 +9,7 @@ const PaidApplicants = () => {
         axios
             .get(
                 `http://localhost:8000/api/get_all_paid_applicant`,
-                { withCredentials: true, headers: { Authorization: `Bearer ${jwt}` } }
+                {  headers: { Authorization: `Bearer ${jwt}` } }
             )
             .then((response) => response.data)
     );

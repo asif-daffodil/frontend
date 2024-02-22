@@ -16,7 +16,7 @@ const StartApplication = () => {
     const navigate = useNavigate();
 
     const { isLoading, data, refetch } = useQuery("oData", () =>
-        jwt && axios
+        axios
             .get("http://localhost:8000/api/checkpreaplication", {
                 headers: { Authorization: `Bearer ${jwt}` },
             })
@@ -53,7 +53,7 @@ const StartApplication = () => {
         formState: { errors },
     } = useForm({ mode: "onChange" });
     const onSubmit = async (data) => {
-        jwt && await axios
+        await axios
             .post("http://localhost:8000/api/updateFirstPart", data, {
                 headers: { Authorization: `Bearer ${jwt}` },
             })

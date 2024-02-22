@@ -31,13 +31,13 @@ const Signup = () => {
 
     useEffect(() => {
         (async () => {
-            jwt && await axios.get('http://localhost:8000/api/user', { headers: { Authorization: `Bearer ${jwt}` } })
+            await axios.get('http://localhost:8000/api/user', { headers: { Authorization: `Bearer ${jwt}` } })
                 .then(response => {
                     if (response.data.role === "admin") {
                         navigate('/admin');
+                    }else{
+                        navigate('/');
                     }
-                }).catch(() => {
-                    navigate('/');
                 })
         })()
     }, [])

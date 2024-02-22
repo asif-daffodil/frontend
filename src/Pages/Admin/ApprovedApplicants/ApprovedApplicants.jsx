@@ -17,7 +17,7 @@ const ApprovedApplicants = () => {
         axios
             .get(
                 `http://localhost:8000/api/get-approved-applicant/${pageNo}/${pageLimit}`,
-                { withCredentials: true, headers: { Authorization: `Bearer ${jwt}` } }
+                {  headers: { Authorization: `Bearer ${jwt}` } }
             )
             .then((response) => response.data)
     );
@@ -39,8 +39,8 @@ const ApprovedApplicants = () => {
     }, [pageNo, data]);
 
     const approveHandle = async (id) => {
-        jwt && await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
-            withCredentials: true, headers: { Authorization: `Bearer ${jwt}` }
+        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
+             headers: { Authorization: `Bearer ${jwt}` }
         }).then(res => {
             if (res.status === 200) {
                 Swal.fire({
@@ -56,8 +56,8 @@ const ApprovedApplicants = () => {
     };
 
     const cancelHandle = async (id) => {
-        jwt && await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
-            withCredentials: true, headers: { Authorization: `Bearer ${jwt}` }
+        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
+             headers: { Authorization: `Bearer ${jwt}` }
         }).then(res => {
             if (res.status === 200) {
                 Swal.fire({
