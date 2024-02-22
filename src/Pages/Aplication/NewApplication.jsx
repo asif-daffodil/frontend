@@ -25,8 +25,8 @@ const NewApplication = () => {
     if (!auth.user[0]) {
       navigate("/login");
     }
-    jwt && axios.get("http://localhost:8000/api/get_individual_application", {
-       headers: { Authorization: `Bearer ${jwt}` },
+    axios.get("http://localhost:8000/api/get_individual_application", {
+       headers: { Authorization: `Bearer `+ Cookies.get("jwt") },
     }).then((res) => {
       if (!res.data) {
         navigate("/requiredDocuments");
