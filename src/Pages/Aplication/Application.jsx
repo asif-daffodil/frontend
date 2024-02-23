@@ -82,12 +82,14 @@ const Application = () => {
                             </div>
                             <div className="row">
                                 <div className="col-md-6">
-                                    <button
-                                        className="btn btn-lg btn-outline-primary mb-3"
-                                        onClick={() => navigate("/startApplication")}
-                                    >
-                                        Application of Salymbekov
-                                    </button>
+                                    {data?.data?.length === 0 && (
+                                        <button
+                                            className="btn btn-lg btn-outline-primary mb-3"
+                                            onClick={() => navigate("/startApplication")}
+                                        >
+                                            Application of Salymbekov
+                                        </button>
+                                    )}
                                     <table className="table border border-1 border-dark">
                                         <thead>
                                             <tr>

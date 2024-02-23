@@ -53,17 +53,17 @@ const router = createBrowserRouter([
         ],
     },
     {
-        path: "/",
+        path: "/admin",
         element: <AdminLayouts />,
         children: [
-            { path: "/admin", element: <Dashboard /> },
-            { path: "/pre-applicants", element: <PreApplicants /> },
-            { path: "/waiting-applicant", element: <WaitingApplicant /> },
-            { path: "/applicants", element: <Applicants /> },
-            { path: "/approved-applicants", element: <ApprovedApplicants /> },
-            { path: "/applicants/:id", element: <IndividualApplicant /> },
-            { path: "/approved-applicants/:id", element: <IndividualApplicant /> },
-            { path: "/paid-applicants", element: <PaidApplicants /> }
+            { path: "/admin/dashboard", element: <Dashboard /> },
+            { path: "/admin/pre-applicants", element: <PreApplicants /> },
+            { path: "/admin/waiting-applicant", element: <WaitingApplicant /> },
+            { path: "/admin/applicants", element: <Applicants /> },
+            { path: "/admin/approved-applicants", element: <ApprovedApplicants /> },
+            { path: "/admin/applicants/:id", element: <IndividualApplicant /> },
+            { path: "/admin/approved-applicants/:id", element: <IndividualApplicant /> },
+            { path: "/admin/paid-applicants", element: <PaidApplicants /> }
         ],
     }
 ]);

@@ -1,25 +1,29 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import useJwt from "../../../hooks/useJwt";
 import Cookies from "js-cookie";
 
 
 const WaitingApplicant = () => {
-  const jwt = useJwt();
   const [pageNo, setPageNo] = useState(1);
   const [pageLimit, setPageLimit] = useState(5);
-  const { data, isLoading, refetch } = useQuery("preWaitApplicants", () =>
-    axios
-      .get(
-        `https://api.smubd.org/api/waiting-applicant/${pageNo}/${pageLimit}`,
-        { headers: { Authorization: `Bearer ` + Cookies.get('jwt') } }
-      )
-      .then((response) => response)
-  );
+  const { data, isLoading, refetch } = useQuery("preWaitApplicants", async () => {
+    try {
+      const response = await axios
+        .get(
+          `https://api.smubd.org/api/waiting-applicant/${pageNo}/${pageLimit}`,
+          { headers: { Authorization: `Bearer ` + Cookies.get('jwt') } }
+        )
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  });
+
+  console.log(data)
 
   const handlePrevPage = () => {
     setPageNo((prevPageNo) => prevPageNo - 1);
@@ -29,14 +33,10 @@ const WaitingApplicant = () => {
     setPageNo((prevPageNo) => prevPageNo + 1);
   };
 
-  useEffect(() => {
-    refetch();
-  }, [pageNo, data]);
-
 
   const cancelHandle = async (id) => {
     await axios.post(`https://api.smubd.org/api/approve-pre-applicant/${id}/Canceled`, {
-      headers: { Authorization: `Bearer ${jwt}` }
+      headers: { Authorization: `Bearer ` + Cookies.get('jwt') }
     }).then(res => {
       if (res.status === 200) {
         Swal.fire({

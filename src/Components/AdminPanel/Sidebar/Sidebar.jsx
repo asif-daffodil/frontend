@@ -4,22 +4,22 @@ const Sidebar = () => {
     return (
         <ul className="nav flex-column">
             <li>
-                <NavLink to="/admin" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Dashboard</NavLink>
+                <NavLink to="/admin/dashboard" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Dashboard</NavLink>
             </li>
             <li>
-                <NavLink to="/pre-applicants" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Pre-Applicants</NavLink>
+                <NavLink to="/admin/pre-applicants" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Pre-Applicants</NavLink>
             </li>
             <li>
-                <NavLink to="/waiting-applicant" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Waiting Applicants</NavLink>
+                <NavLink to="/admin/waiting-applicant" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Waiting Applicants</NavLink>
             </li>
             <li>
-                <NavLink to="/applicants" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Applicants</NavLink>
+                <NavLink to="/admin/applicants" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Applicants</NavLink>
             </li>
             <li>
-                <NavLink to="/approved-applicants" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Approved Applicants</NavLink>
+                <NavLink to="/admin/approved-applicants" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Approved Applicants</NavLink>
             </li>
             <li>
-                <NavLink to="/paid-applicants" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Paid Applicants</NavLink>
+                <NavLink to="/admin/paid-applicants" className={({ isActive }) => isActive ? "nav-link text-white fw-bold " : "nav-link "}>Paid Applicants</NavLink>
             </li>
         </ul>
     );
