@@ -7,25 +7,31 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useEffect } from "react";
 import useJwt from "../../hooks/useJwt";
+import Cookies from "js-cookie";
 
 
 const Payments = () => {
     const jwt = useJwt();
     const navigate = useNavigate();
-    const { data, isLoading, refetch } = useQuery("payData", () =>
-        axios.get("http://localhost:8000/api/get_individual_application", {
-             headers: { Authorization: `Bearer ${jwt}` },
-        })
-    );
+    const { data, isLoading, refetch } = useQuery("payData", async () => {
+        try {
+            const response = await axios.get("https://api.smubd.org/api/get_individual_application", {
+                headers: { Authorization: `Bearer ` + Cookies.get("jwt") },
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    });
 
     useEffect(() => {
         refetch();
-        if (!data?.data.length == 0) {
+        if (!data?.length == 0) {
             navigate("/applicationStatus");
         }
     }, [data]);
 
-    if (!data?.data.length == 0) {
+    if (!data?.length == 0) {
         navigate("/applicationStatus");
     }
 
@@ -41,11 +47,8 @@ const Payments = () => {
         formData.append("screenshot", data.screenshot[0]);
         (async () => {
             await axios
-                .post("http://localhost:8000/api/update-payment", formData, {
-                     headers: { Authorization: `Bearer ${jwt}` },
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
+                .post("https://api.smubd.org/api/update-payment", formData, {
+                    headers: { Authorization: `Bearer ` + Cookies.get('jwt') },
                 })
                 .then((response) => {
                     if (response.status === 201) {
@@ -57,7 +60,7 @@ const Payments = () => {
                             showConfirmButton: false,
                         }).then(() => {
                             setTimeout(() => {
-                                navigate("/applicationStatus");
+                                navigate("/application");
                             }, 2000);
                         });
                     }

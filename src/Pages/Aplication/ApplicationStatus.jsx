@@ -12,11 +12,15 @@ const ApplicationStatus = () => {
     const goToNewApp = () => {
         navigate("/newApplication");
     };
-    const { isLoading, data, refetch } = useQuery("epoData", () =>
-        axios.get("http://localhost:8000/api/checkpreaplication", {
-             headers: { Authorization: `Bearer ${jwt}` },
-        })
-    );
+    const { isLoading, data, refetch } = useQuery("epoData", async () => {
+        try {
+            await axios.get("https://api.smubd.org/api/checkpreaplication", {
+                headers: { Authorization: `Bearer ${jwt}` },
+            }).then((response) => response.data);
+        } catch (e) {
+            throw new Error(e.message);
+        }
+    });
 
     useEffect(() => {
         refetch();

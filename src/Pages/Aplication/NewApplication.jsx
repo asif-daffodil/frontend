@@ -15,18 +15,23 @@ const NewApplication = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  const { isLoading, data, refetch } = useQuery("poData", async () => {
-    await axios.get("http://localhost:8000/api/checkpreaplication", {
-        headers: { Authorization: `Bearer ` + Cookies.get("jwt") },
+  const { data, isLoading, error } = useQuery("preApplicationData", async () => {
+    try {
+      const response = await axios.get("https://api.smubd.org/api/checkpreaplication", {
+        headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
       });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   });
 
   useEffect(() => {
     if (!auth.user[0]) {
       navigate("/login");
     }
-    axios.get("http://localhost:8000/api/get_individual_application", {
-       headers: { Authorization: `Bearer `+ Cookies.get("jwt") },
+    axios.get("https://api.smubd.org/api/get_individual_application", {
+      headers: { Authorization: `Bearer ` + Cookies.get("jwt") },
     }).then((res) => {
       if (!res.data) {
         navigate("/requiredDocuments");
@@ -53,21 +58,17 @@ const NewApplication = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (!data) {
-    refetch();
-    return <div>Loading...</div>;
-  }
-  if (!data.data) {
     navigate("/application");
-  } else if (!data?.data[0]?.application_status) {
+  } else if (!data[0]?.application_status) {
     navigate("/application");
-  } else if (data?.data[0]?.application_status === "Pending") {
+  } else if (data[0]?.application_status === "Pending") {
     navigate("/application");
   }
 
 
   const onSubmit = async (data) => {
     (async () => {
-      await axios.post("http://localhost:8000/api/new-application", data, { headers: { Authorization: `Bearer ${jwt}` } }).then((res) => {
+      await axios.post("https://api.smubd.org/api/new-application", data, { headers: { Authorization: `Bearer ${jwt}` } }).then((res) => {
         if (res.status === 201) {
           Swal.fire({
             text: res.data.message,

@@ -15,7 +15,7 @@ const AdminLayouts = () => {
     }
 
     const { data: pata, isLoading } = useQuery('repoooData', () =>
-        jwt ? axios.get('http://localhost:8000/api/user',
+        jwt ? axios.get('https://api.smubd.org/api/user',
             { headers: { 'Authorization': `Bearer ${jwt}` } }) : null
     )
     if (isLoading) return <div>Loading...</div>;

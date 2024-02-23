@@ -4,29 +4,34 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import useJwt from "../../../hooks/useJwt";
+import Cookies from "js-cookie";
 
 
 const IndividualApplicant = () => {
-    const jwt = useJwt();
     const id = useParams().id;
     const navigate = useNavigate();
 
-    const { data, isLoading, refetch } = useQuery("singleApplicant", () =>
-        axios
-            .get(
-                `http://localhost:8000/api/get-individual-applicant/${id}`,
-                {  headers: { Authorization: `Bearer ${jwt}` } }
+    const { data, isLoading, refetch } = useQuery("singleApplicant", async () => {
+        try {
+            const response = await axios.get(`https://api.smubd.org/api/get-individual-applicant/${id}`,
+                { headers: { Authorization: `Bearer ` + Cookies.get('jwt') } }
             )
-            .then((response) => response.data)
-    );
+            return response.data;
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    });
+
+
+
     if (isLoading) {
         return <div>Loading...</div>
     }
 
     const approveHandle = async (id) => {
-        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
-             headers: { Authorization: `Bearer ${jwt}` }
+        await axios.post(`https://api.smubd.org/api/approve-applicant/${id}/Approved`, {
+            headers: { Authorization: `Bearer ` + Cookies.get('jwt') }
         }).then(res => {
             if (res.status === 200) {
                 Swal.fire({
@@ -42,8 +47,8 @@ const IndividualApplicant = () => {
     };
 
     const cancelHandle = async (id) => {
-        await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
-             headers: { Authorization: `Bearer ${jwt}` }
+        await axios.post(`https://api.smubd.org/api/approve-applicant/${id}/Canceled`, {
+            headers: { Authorization: `Bearer ` + Cookies.get('jwt') }
         }).then(res => {
             if (res.status === 200) {
                 Swal.fire({

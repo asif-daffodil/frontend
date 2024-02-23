@@ -4,30 +4,44 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../hooks/auth";
 import { useQuery } from "react-query";
-import useJwt from "../../hooks/useJwt";
+import Cookies from "js-cookie";
 
 
 const Application = () => {
-    const jwt = useJwt();
     const auth = useAuth();
     const navigate = useNavigate();
 
-    const { isLoading, data, refetch } = useQuery("repoData", async () =>
-    jwt && await axios.get("http://localhost:8000/api/checkpreaplication", {
-            headers: { Authorization: `Bearer ${jwt}` },
-        })
-    );
+    const { data, isLoading } = useQuery("repoData", async () => {
+        try {
+            const response = await axios.get("https://api.smubd.org/api/checkpreaplication", {
+                headers: { Authorization: `Bearer ` + Cookies.get("jwt") },
+            })
+            return response;
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    });
 
-    const { isLoading: isLoadingUser, data: dataUser, refetch: refetchUser } = useQuery("appData", async () => jwt && await axios.get("http://localhost:8000/api/get_individual_application", { headers: { Authorization: `Bearer ${jwt}` } }).then(response => response.data));
+    const { isLoading: isLoadingUser, data: dataUser } = useQuery("appData", async () => {
+        try {
+            const response = await axios.get("https://api.smubd.org/api/get_individual_application", {
+                headers: { Authorization: `Bearer ` + Cookies.get("jwt") },
+            })
+            return response.data;
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    });
 
     useEffect(
         () => {
             if (!auth.user[0]) {
                 navigate("/login");
             }
-            refetch();
         },
-        [auth.user[0], jwt]
+        [auth.user[0]]
     );
 
     const goToNewApp = () => {

@@ -5,19 +5,20 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import useJwt from "../../../hooks/useJwt";
+import Cookies from "js-cookie";
 
 
 const WaitingApplicant = () => {
   const jwt = useJwt();
   const [pageNo, setPageNo] = useState(1);
   const [pageLimit, setPageLimit] = useState(5);
-  const { data, isLoading, refetch } = useQuery("preApplicants", () =>
+  const { data, isLoading, refetch } = useQuery("preWaitApplicants", () =>
     axios
       .get(
-        `http://localhost:8000/api/waiting-applicant/${pageNo}/${pageLimit}`,
-        {  headers: { Authorization: `Bearer ${jwt}` } }
+        `https://api.smubd.org/api/waiting-applicant/${pageNo}/${pageLimit}`,
+        { headers: { Authorization: `Bearer ` + Cookies.get('jwt') } }
       )
-      .then((response) => response.data)
+      .then((response) => response)
   );
 
   const handlePrevPage = () => {
@@ -34,8 +35,8 @@ const WaitingApplicant = () => {
 
 
   const cancelHandle = async (id) => {
-    await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Canceled`, {
-       headers: { Authorization: `Bearer ${jwt}` }
+    await axios.post(`https://api.smubd.org/api/approve-pre-applicant/${id}/Canceled`, {
+      headers: { Authorization: `Bearer ${jwt}` }
     }).then(res => {
       if (res.status === 200) {
         Swal.fire({
@@ -57,7 +58,7 @@ const WaitingApplicant = () => {
     <div className="row">
       <div className="col-md-12">
         <h2>Waiting Applicants</h2>
-        {data && (
+        {data.length > 0 && (
           <>
             <table className="table table-bordered  table-striped ">
               <thead>

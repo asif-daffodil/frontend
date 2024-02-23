@@ -13,7 +13,7 @@ const LogoutBtn = () => {
 
 
     const logout = () => {
-        fetch('http://localhost:8000/api/logout', {
+        fetch('https://api.smubd.org/api/logout', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${jwt}`,

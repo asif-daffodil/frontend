@@ -6,14 +6,23 @@ import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
-import useJwt from "../../hooks/useJwt";
+import Cookies from "js-cookie";
 
 
 const RequiredDocuments = () => {
-  const jwt = useJwt();
   const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onChange" });
   const navigate = useNavigate();
-  const { data, isLoading, refetch } = useQuery('user', () => axios.get('http://localhost:8000/api/get_individual_application', { headers: { Authorization: `Bearer ${jwt}` } }).then(response => response.data));
+  const { isLoading, data } = useQuery("appData", async () => {
+    try {
+      const response = await axios.get("https://api.smubd.org/api/get_individual_application", {
+        headers: { Authorization: `Bearer ` + Cookies.get("jwt") },
+      })
+      return response.data;
+    }
+    catch (error) {
+      throw new Error(error.message);
+    }
+  });
   const onSubmit = (data) => {
     (async () => {
       const formData = new FormData();
@@ -21,8 +30,8 @@ const RequiredDocuments = () => {
       formData.append('hsc', data.hsc[0]);
       formData.append('passport', data.passport[0]);
       formData.append('photo', data.photo[0]);
-      await axios.post('http://localhost:8000/api/upload', formData, {
-        headers: { Authorization: `Bearer ${jwt}` },
+      await axios.post('https://api.smubd.org/api/upload', formData, {
+        headers: { Authorization: `Bearer ` + Cookies.get('jwt') },
       }).then(response => {
         if (response.data.message === 'Documents successfully uploaded') {
           Swal.fire({
@@ -33,7 +42,7 @@ const RequiredDocuments = () => {
             showConfirmButton: false,
           }).then(() => {
             setTimeout(() => {
-              navigate('/applicationStatus');
+              navigate('/application');
             }, 2000);
           })
         }
@@ -45,13 +54,10 @@ const RequiredDocuments = () => {
     return <div>Loading...</div>
   }
 
-  if (!data) {
-    refetch();
-    return <div>Loading...</div>
-  }
+  console.log(data)
 
 
-  if (!data.applicationType) {
+  if (!data.application_status) {
     navigate("/application");
   }
 

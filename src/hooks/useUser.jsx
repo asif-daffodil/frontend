@@ -11,7 +11,7 @@ const useUser = () => {
     useEffect(() => {
         (
             async () => {
-                const response = await axios.get('http://localhost:8000/api/user', {
+                const response = await axios.get('https://api.smubd.org/api/user', {
                     headers: {
                         Authorization: `Bearer ${jwt}`
                     }

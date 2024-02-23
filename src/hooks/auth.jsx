@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     const jwt = Cookies.get('jwt');
 
     useState(() => {
-        axios.get('http://localhost:8000/api/user', {
+        axios.get('https://api.smubd.org/api/user', {
             headers: {
                 Authorization: `Bearer ${jwt}`
             }

@@ -5,23 +5,23 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2/dist/sweetalert2.js';
-import useJwt from "../../../hooks/useJwt";
+import Cookies from "js-cookie";
 
 
 const Applicants = () => {
-  const jwt = useJwt();
   const [pageNo, setPageNo] = useState(1);
   const navigate = useNavigate();
   const [pageLimit, setPageLimit] = useState(5);
-  const { data, isLoading, refetch } = useQuery("preApplicants", () =>
-    axios
-      .get(
-        `http://localhost:8000/api/get-applicant/${pageNo}/${pageLimit}`,
-        {  headers: { Authorization: `Bearer ${jwt}` } }
-      )
-      .then((response) => response.data)
-  );
-
+  const { data, isLoading, refetch } = useQuery("preApplicants", async () => {
+    try {
+      const response = await axios.get(`https://api.smubd.org/api/get-applicant/${pageNo}/${pageLimit}`, {
+        headers: { Authorization: `Bearer ` + Cookies.get('jwt') }
+      });
+      return response;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  });
   const handlePrevPage = () => {
     setPageNo((prevPageNo) => prevPageNo - 1);
   };
@@ -39,8 +39,8 @@ const Applicants = () => {
   }, [pageNo, data]);
 
   const approveHandle = async (id) => {
-    await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Approved`, {
-       headers: { Authorization: `Bearer ${jwt}` }
+    await axios.post(`https://api.smubd.org/api/approve-applicant/${id}/Approved`, {
+      headers: { Authorization: `Bearer ` + Cookies.get('jwt') }
     }).then(res => {
       if (res.status === 200) {
         Swal.fire({
@@ -56,8 +56,8 @@ const Applicants = () => {
   };
 
   const cancelHandle = async (id) => {
-    await axios.post(`http://localhost:8000/api/approve-applicant/${id}/Canceled`, {
-       headers: { Authorization: `Bearer ${jwt}` }
+    await axios.post(`https://api.smubd.org/api/approve-applicant/${id}/Canceled`, {
+      headers: { Authorization: `Bearer ` + Cookies.get('jwt') }
     }).then(res => {
       if (res.status === 200) {
         Swal.fire({
@@ -78,8 +78,8 @@ const Applicants = () => {
   return (
     <div className="row">
       <div className="col-md-12">
-        <h2>Pre Applicants</h2>
-        {data && (
+        <h2>All Applicants</h2>
+        {data?.data?.length > 0 && (
           <>
             <table className="table table-bordered  table-striped ">
               <thead>

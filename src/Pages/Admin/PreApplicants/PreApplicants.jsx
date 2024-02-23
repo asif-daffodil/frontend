@@ -14,7 +14,7 @@ const PreApplicants = () => {
   const { data, isLoading, refetch } = useQuery("preApplicantss", () =>
     axios
       .get(
-        `http://localhost:8000/api/get-pre-applicant/${pageNo}/${pageLimit}`,
+        `https://api.smubd.org/api/get-pre-applicant/${pageNo}/${pageLimit}`,
         { headers: { Authorization: `Bearer ${jwt}` } }
       )
       .then((response) => response.data)
@@ -33,8 +33,8 @@ const PreApplicants = () => {
   }, [pageNo, data]);
 
   const approveHandle = async (id) => {
-    await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Approved`, {
-       headers: { Authorization: `Bearer ${jwt}` }
+    await axios.post(`https://api.smubd.org/api/approve-pre-applicant/${id}/Approved`, {
+      headers: { Authorization: `Bearer ${jwt}` }
     }).then(res => {
       if (res.status === 200) {
         Swal.fire({
@@ -50,8 +50,8 @@ const PreApplicants = () => {
   };
 
   const cancelHandle = async (id) => {
-    await axios.post(`http://localhost:8000/api/approve-pre-applicant/${id}/Canceled`, {
-       headers: { Authorization: `Bearer ${jwt}` }
+    await axios.post(`https://api.smubd.org/api/approve-pre-applicant/${id}/Canceled`, {
+      headers: { Authorization: `Bearer ${jwt}` }
     }).then(res => {
       if (res.status === 200) {
         Swal.fire({

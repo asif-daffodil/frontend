@@ -31,11 +31,11 @@ const Signup = () => {
 
     useEffect(() => {
         (async () => {
-            await axios.get('http://localhost:8000/api/user', { headers: { Authorization: `Bearer ${jwt}` } })
+            await axios.get('https://api.smubd.org/api/user', { headers: { Authorization: `Bearer ${jwt}` } })
                 .then(response => {
                     if (response.data.role === "admin") {
                         navigate('/admin');
-                    }else{
+                    } else {
                         navigate('/');
                     }
                 })
@@ -44,7 +44,7 @@ const Signup = () => {
 
 
     const onSubmit = data => {
-        axios.post('http://localhost:8000/api/login', data, {
+        axios.post('https://api.smubd.org/api/login', data, {
             headers:
             {
                 'Content-Type': 'application/json'

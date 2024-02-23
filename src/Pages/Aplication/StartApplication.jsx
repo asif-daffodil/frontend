@@ -7,21 +7,23 @@ import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import PreApplication from "../../Components/Application/PreApplication/PreApplication";
 import { useQuery } from "react-query";
-import useJwt from "../../hooks/useJwt";
+import Cookies from "js-cookie";
 
 
 const StartApplication = () => {
-    const jwt = useJwt();
     const auth = useAuth();
     const navigate = useNavigate();
 
-    const { isLoading, data, refetch } = useQuery("oData", () =>
-        axios
-            .get("http://localhost:8000/api/checkpreaplication", {
-                headers: { Authorization: `Bearer ${jwt}` },
-            })
-            .then((response) => response.data)
-    );
+    const { isLoading, data, refetch } = useQuery("oData", async () => {
+        try {
+            const response = await axios.get("https://api.smubd.org/api/checkpreaplication", {
+                headers: { Authorization: `Bearer ` + Cookies.get('jwt') },
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    });
     useEffect(
         () => {
             if (!auth.user[0]) {
@@ -54,8 +56,8 @@ const StartApplication = () => {
     } = useForm({ mode: "onChange" });
     const onSubmit = async (data) => {
         await axios
-            .post("http://localhost:8000/api/updateFirstPart", data, {
-                headers: { Authorization: `Bearer ${jwt}` },
+            .post("https://api.smubd.org/api/updateFirstPart", data, {
+                headers: { Authorization: `Bearer ` + Cookies.get('jwt') },
             })
             .then((response) => {
                 if (response.data.message === "User successfully updated") {
